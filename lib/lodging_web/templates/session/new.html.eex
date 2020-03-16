@@ -1,0 +1,27 @@
+<div class="c-business-button-position">
+<button type="button" class="c-business-button"> Business </button>
+</div>
+
+<div class="pt-8 lg:pl-8 text-center lg:text-left lg:w-2/5">
+    <h2 class="c-main-title text-red-500"> YOUR ONE STOP SERVICES BOOKING PLATFORM </h2>
+</div>
+<div class="c-main-page-logo">
+    <%# logo %>
+</div>
+
+<div class="w-4/5 m-auto lg:m-3 md:w-3/5 lg:ml-8">
+    <%= form_for @conn, Routes.session_path(@conn, :new), [as: :session], fn f -> %>
+  <br>
+  <div class="c-user-login-inputs">
+    <h3 class="c-username-input">Username</h3>
+    <%= text_input f, :username, class: "c-standard_input lg:w-3/5" %>
+  </div>
+  <div class="c-user-login-inputs">
+    <h3 class="c-password-input">Password</h3>
+    <%= password_input f, :password, class: "c-standard_input lg:w-3/5" %>
+  </div>
+  <div class="c-login-button">
+    <%= submit "Login", class: "shadow-md c-btn" %>
+  </div>
+  <% end %>
+</div>

@@ -1,0 +1,57 @@
+<%= form_for @conn, Routes.company_path(@conn, :sign_up, @business.id), [as: :new_inputs], fn f -> %>
+
+<div class=" mb-12 lg:text-left w-4/5 md:w-3/5 lg:w-4/5 mx-auto flex flex-row pt-8">
+  <div class="order-2">
+    <h2 class="orange_h2">Hello <%= @business.username %> </h2>
+    <h3>Please finish your listing here</h3>
+  </div>
+</div>
+<div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row lg:flex flex-row">
+  <div class="mb-4 lg:mx-2 text-center lg:text-left">
+    <h4 class="mb-1 text-sm">Username</h4>
+    <%= text_input f, :username, autofocus: true, class: "c-standard_input"%>
+  </div>
+
+  <div class="mb-4 lg:mx-2 text-center lg:text-left">
+    <h4 class="mb-1 text-sm">Password</h4>
+    <%= password_input f, :password, class: "c-standard_input" %>
+    <%# <%= error_tag f, :password %>  
+  </div>
+
+  <div class="mb-4 max-w-1/4 lg:mx-2 text-center lg:text-left">
+    <h4 class="mb-1 text-sm">Confirm password</h4>
+    <%= password_input f, :password_confirmation, class: "c-standard_input" %>
+    <%# <%= error_tag f, :password_confirmation %> 
+  </div>
+</div>
+
+<div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row">
+  <div class="mb-4 lg:mx-2 text-center lg:text-left">
+    <h4 class="text-center lg:text-left mb-1">First name</h4>
+    <%= text_input f, :name, class: "c-standard_input" %>
+  </div>
+
+  <div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row">
+  <div class="mb-4 lg:mx-2 text-center lg:text-left">
+    <h4 class="text-center lg:text-left mb-1">Last name</h4>
+    <%= text_input f, :lastname, class: "c-standard_input" %>
+  </div>
+
+  <div class="mb-4 lg:mx-2 text-center lg:text-left">
+    <h4 class="mb-1 text-sm">Email address</h4>
+    <%= text_input f, :email_address, class: "c-standard_input" %>
+  </div>
+
+  <div>
+  <%= checkbox f, :over_18%> Please tick if you're over 18
+  </div>
+
+    <div>
+  <%= checkbox f, :terms_and_conditions%> Please accepts terms and conditions
+  </div>
+
+
+<div class="w-3/5 lg:w-4/5 mx-auto flex flex-col lg:flex-row mb-4">
+  <%= submit "Submit", class: "c-btn c-btn--orange new_user_btn shadow-md" %>
+  <% end%>
+</div>
