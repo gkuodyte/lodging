@@ -6,7 +6,7 @@ defmodule Lodging.Accounts do
   import Ecto.Query, warn: false
   use OK.Pipe
   alias Lodging.Repo
-  alias Lodging.Accounts.{User, Business}
+  alias Lodging.Accounts.{User, Business, Listing}
 
   def change_user(%User{} = user \\ %User{}, %{} = changes) do
     user
@@ -48,6 +48,12 @@ defmodule Lodging.Accounts do
 
   def get_business!(id) do
     Repo.get!(Business, id)
+    |> preload_listings()
+  end
+
+  def preload_listings(business) do
+    # Repo.all from b in Business, preload: [:listings]
+    Repo.preload business, :listings
   end
 
   def get_business(id) do

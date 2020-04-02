@@ -1,0 +1,19 @@
+<button><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :view_enquiries, @user.id)) %></button>
+<h1> View your enquiry here </h1>
+<h2> 
+  <div>
+    <% business = Lodging.Accounts.get_business!(@enquiry.business_id) %>
+    <h3> Created: <%= @enquiry.inserted_at %></h3>
+    <h3> Business: <%= business.business_name %> </h3>
+    <h3> Services booked:<%= if @enquiry.accommodation, do: " accommodation " %><%= if @enquiry.catering, do: "catering" %> <%= if @enquiry.events, do: " and events."%>.
+    <h3> Number of guests: <%= if @enquiry.guests_number != nil, do: @enquiry.guests_number, else: "none" %>
+    <h3> Dates
+      <div>
+        <h4> From: <%= if @enquiry.date_from != nil, do: @enquiry.date_from, else: "Not selected" %></h4>
+        <h4> To: <%= if @enquiry.date_to != nil, do: @enquiry.date_to, else: "Not selected" %></h4>
+      </div>
+    </h3>
+    <h3> Your comment: <%= if @enquiry.comment != nil, do: @enquiry.comment, else: "Not added" %></h3>
+    <button><%= link("Edit", to: Routes.user_path(LodgingWeb.Endpoint, :edit_enquiry, @user.id, @enquiry.id)) %></button>
+  </div>
+</h2>

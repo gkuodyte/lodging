@@ -1,0 +1,31 @@
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @user.name %> </h2>
+    <h3>Please look through this listings information</h3>
+  </div>
+</div>
+
+<h1> <%= @listing.title %> </h1>
+<h2><em><%= Map.get(@listing.config, "description") %></em></h2>
+<div>
+    <br>
+    <h3><%= if @listing.accommodation, do: "This property provides accommodation services.", else: "This property doesn't provide any accommodation services." %></h3> 
+    <br>
+    <h3><%= if @listing.catering, do: "This property provides catering services.", else: "This property doesnt provide any catering services." %></h3>
+    <br>
+    <h3><%= if @listing.events, do: "This property provides events services.", else: "This property doesnt provide any events services." %> </h3>
+    <br>
+    <h3>This property belongs to: <%= @business.name %> from <%= @business.business_name %> </h3>
+    <h3>Please use this number <%= @listing.contact_number %> to contact for more information. </h3>
+    <br>
+    <h1> Listing address: </h1>
+        <div>
+            <h2> Address </h2>
+            <h3> <%= @listing.street_address %> </h3>
+            <h3> <%= if @listing.street_address2 != "", do: @listing.street_address2 %></h3>
+            <h3> <%= @listing.city %></h3>
+            <h3> <%= @listing.postcode %></h3>
+            <h3> <%= if @listing.country == "uk", do: "United Kingdom" %></h3>
+        </div>
+</div>
+<button phx-click="next" > Next </button>

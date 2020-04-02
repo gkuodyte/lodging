@@ -1,0 +1,12 @@
+<h1> Hello <%= @business.name %>! View your listings here </h1>
+<button><%= link("Create a new listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
+<%= for listing <- @listings do %>
+<div>
+    <div>
+    <h3><%= listing.title %></h3>
+    <h2><em><%= Map.get(listing.config, "description") %></em></h2>
+    <button><%= link("Edit",to: Routes.listing_path(@conn, :edit_listing, @business.id, listing.id)) %></button>
+    <button><%= link("Delete",to: Routes.listing_path(@conn, :delete_listing, @business.id, listing.id)) %></button>
+    </div>
+</div>
+<% end %>

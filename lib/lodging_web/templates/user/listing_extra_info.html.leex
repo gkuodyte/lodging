@@ -1,0 +1,33 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+  <div class="mx-auto flex">
+    <div class="order-2">
+      <h2>Hello <%= @user.name %> </h2>
+      <h3>Please enter additional information</h3>
+    </div>
+  </div>
+  <div>
+  <div>
+    <h4>Dates</h4>
+      <p> From </p>
+      <%= text_input f, :day, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
+      <%= text_input f, :month, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
+      <%= text_input f, :year, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
+      <p> To </p>
+      <%= text_input f, :day_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
+      <%= text_input f, :month_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
+      <%= text_input f, :year_to, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
+  </div>
+
+    <div>
+      <h4>Comments (Optional) </h4>
+        <%= text_input f, :comment, class: "c-standard_input" %> Please enter any additional comments or questions
+    </div>
+
+    <div>
+      <h4>Contact number (Optional) </h4>
+        <%= text_input f, :contact_number, class: "c-standard_input" %> Please enter your contact number for getting in touch about the enquiry
+    </div>
+  </div>
+</form>
+<button phx-click="previous"> Back </button>
+<button phx-click="submit"> Submit </button>

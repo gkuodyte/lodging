@@ -1,0 +1,29 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @business.username %> </h2>
+    <h3>Please add your listing</h3>
+  </div>
+</div>
+
+<div>
+  <div>
+    <h4>Accommodation</h4>
+    <%= checkbox f, :accommodation %> Do you provide any accommodation services with this listing?
+  </div>
+
+  <div>
+    <h4>Catering</h4>
+    <%= checkbox f, :catering %> Do you provide any catering services with this listing?
+  </div>
+
+  <div>
+    <h4>Events</h4>
+    <%= checkbox f, :events %> Do you provide any events services with this listing?
+  </div>
+</div>
+</form>
+<button phx-click="next" > Next </button>
+  
+
+

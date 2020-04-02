@@ -3642,11 +3642,20 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-"phoenix@file:../deps/phoenix":
-  version "1.4.12"
+phoenix@^1.4.16:
+  version "1.4.16"
+  resolved "https://registry.yarnpkg.com/phoenix/-/phoenix-1.4.16.tgz#83b887ddb69b676024fd1c6ea6849a46ae0d837f"
+  integrity sha512-XmKVTlFQuRwTYBO1WU1OaN2tzywRAtY6haUpxHPGxNZuyPEgmo+Caw7+BMlIPhipM197+d962i6sGZLylBtCbA==
 
-"phoenix_html@file:../deps/phoenix_html":
-  version "2.13.3"
+phoenix_html@^2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/phoenix_html/-/phoenix_html-2.13.2.tgz#28a2376b713e9d8dda0aee8710f7c73732ff0157"
+  integrity sha512-tXrTduDqIisIn0nhZJURLqjaN5aq0nYAwh6wKGQKug6FHEsRmjxWMCVSrPyXo+2ldf7EQLUWdX1ZzlNtyXTsSQ==
+
+phoenix_live_view@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/phoenix_live_view/-/phoenix_live_view-0.10.0.tgz#bcc724e138794c0c2e6d83eedfa3c7af53c521d3"
+  integrity sha512-Her+HpIiBBobZykCqisg+F3ziz2UUu8Xl22ycNwWUg0dr3C60CPfquLPp1uLbN7Nr5kjehIEmeeNx5Vz+R/8Nw==
 
 pify@^2.3.0:
   version "2.3.0"

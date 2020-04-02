@@ -1,0 +1,28 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @user.name %> </h2>
+    <h3>Please enter your accommodation preferences</h3>
+  </div>
+</div>
+<%= if @listing.accommodation do %>
+        <h3>Property Type: <%= @listing.property_type %> </h3> 
+        <h3>Has <%= @listing.rooms_number %> rooms and can host <%= @listing.guests_number%> guests. Have <%= if @listing.rooms_type == "both", do: "both single and double", else: @listing.rooms %> rooms. </h3> 
+        <h3>The price for one person nightly stay is <%= @listing.night_price %> pounds.</h3>
+    <% end %>
+<div>
+  <div>
+    <h4>Accommodation</h4>
+    <%= checkbox f, :accommodation %> Do you wish to book accommodation?
+  </div>
+
+  <div>
+    <h4>Guests</h4>
+    <% max_guests = @listing.guests_number %>
+    <%= select f, :guests_number, 1..max_guests %> For how many people do you want to book?
+  </div>
+
+</div>
+</form>
+<button phx-click="previous" > Back </button>
+<button phx-click="next" > Next </button>

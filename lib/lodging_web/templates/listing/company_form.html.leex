@@ -1,0 +1,40 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @business.username %> </h2>
+    <h3>Please complete your listing</h3>
+  </div>
+</div>
+
+<div>
+  <div>
+  <h4>Choose a property type</h4>
+    <%= select(f, :property_type, ["Hotel": "hotel", "Cabins": "cabins", "Bed and Breakfast": "bnb"]) %>
+  </div>
+
+  <div>
+    <h4>How many rooms does your property have?</h4>
+    <%= select f, :rooms_number, 1..50, class: "c-standard_input"%>
+  </div>
+
+  <div>
+    <h4>What will your guests have?</h4> 
+    <%= radio_button(f, :rooms_type, "single") %> Single room <br>
+    <%= radio_button(f, :rooms_type, "double") %> Double room <br>
+    <%= radio_button(f, :rooms_type, "both") %> Both types of rooms
+  </div>
+
+  <div>
+   <h4>How many guests can your property accommodate?</h4>
+   <%= select f, :guests_number, 1..100, class: "c-standard_input"%>
+  </div>
+
+  <div>
+  <h3>Accommodation price</h3>
+  <%= select f, :night_price, 10..100, class: "c-standard_input"%> Whats the average price of a nights stay?
+  </div>
+</div>
+</form>
+
+<button phx-click="previous" > Back </button>
+<button phx-click="next" > Next </button>

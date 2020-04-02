@@ -23,6 +23,7 @@ defmodule LodgingWeb do
 
       import Plug.Conn
       import LodgingWeb.Gettext
+      import Phoenix.LiveView.Controller
       alias LodgingWeb.Router.Helpers, as: Routes
     end
   end
@@ -41,6 +42,7 @@ defmodule LodgingWeb do
 
       import LodgingWeb.ErrorHelpers
       import LodgingWeb.Gettext
+      import Phoenix.LiveView.Helpers
       alias LodgingWeb.Router.Helpers, as: Routes
     end
   end
@@ -50,6 +52,7 @@ defmodule LodgingWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

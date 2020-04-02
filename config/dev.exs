@@ -9,6 +9,9 @@ config :lodging, Lodging.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+  # for cloud storage
+  # uploads_directory: System.get_env("POETIC_UPLOADS_DIRECTORY") || "/uploads"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -74,3 +77,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :lodging,
+  uploads_directory: "/Users/gabijakuodyte/uploads_dev"

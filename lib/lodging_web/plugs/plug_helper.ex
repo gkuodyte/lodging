@@ -32,8 +32,10 @@ defmodule LodgingWeb.Plugs.PlugHelper do
   end
 
   defp redir("user", conn) do
+    user_id = get_session(conn, :current_account_id)
+
     conn
-    |> redirect(to: Routes.user_path(conn, :home))
+    |> redirect(to: Routes.user_path(conn, :home, user_id))
     |> halt()
   end
 
@@ -41,7 +43,7 @@ defmodule LodgingWeb.Plugs.PlugHelper do
     business_id = get_session(conn, :current_account_id)
 
     conn
-    |> redirect(to: Routes.company_path(conn, :home, business_id))
+    |> redirect(to: Routes.listing_path(conn, :home, business_id))
     |> halt()
   end
 

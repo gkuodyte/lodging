@@ -1,0 +1,6 @@
+<h1>HELLO <%= @business.username %> </h1>
+<%= if Map.get(@business, :listings) != [] do %>
+<button><%= link("View your existing listings here",to: Routes.listing_path(@conn, :view_all_listings, @business.id)) %></button>
+<% else %>
+<button><%= link("Create a new listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
+<% end %>

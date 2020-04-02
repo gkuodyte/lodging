@@ -1,0 +1,56 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @business.username %> </h2>
+    <h3>Please complete your listing</h3>
+    <h3>Please give additional details about your listing</h3>
+  </div>
+</div>
+<div>
+  <div>
+  <h4>Title</h4>
+    <%= text_input f, :title, class: "c-standard_input", required: true %>
+  </div>
+
+  <h4>Description</h4>
+    <%= text_input f, :description, class: "c-standard_input", required: true %>
+  </div>
+
+  <div>
+    <h4>Images</h4>
+    <button> Add </button>
+  </div>
+
+  <%= if Map.get(@inputs, "catering") == "true" do %>
+  <div>
+  <h3>Catering</h3>
+  <%= checkbox f, :tailorable_menu %> Can your menu be tailored?
+  </div>
+
+  <div>
+  <h3>Meals</h3>
+  <%= select f, :meals_number, 1..100, class: "c-standard_input"%> For how many guests can your property provide meals?
+  </div>
+
+  <div>
+  <h3>Meals price</h3>
+  <%= select f, :meals_price_range, 10..100, class: "c-standard_input"%> Whats the average price of your meals?
+  </div>
+  <% end %>
+
+  <%= if Map.get(@inputs, "events") == "true" do %>
+  <div>
+  <h4>Events type</h4>
+    <%= text_input f, :events_type, class: "c-standard_input" %> Please provide a description of what type of events you can host
+  </div>
+  <% end %>
+
+  <div>
+  <h4>Contact number (Optional) </h4>
+    <%= text_input f, :contact_number, class: "c-standard_input" %> Please enter your contact number for getting in touch about the listing
+  </div>
+
+</div>
+</form>
+<button phx-click="previous" > Back </button>
+<button phx-click="submit" > Submit </button>

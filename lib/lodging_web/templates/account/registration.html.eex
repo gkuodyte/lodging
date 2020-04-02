@@ -43,11 +43,11 @@
   </div>
 
   <div>
-  <%= checkbox f, :over_18%> Please tick if you're over 18
+  <%= checkbox f, :over_18, required: true %> Please tick if you're over 18
   </div>
 
     <div>
-  <%= checkbox f, :terms_and_conditions%> Please accepts terms and conditions
+  <%= checkbox f, :terms_and_conditions, required: true %> Please accepts terms and conditions
   </div>
 
 

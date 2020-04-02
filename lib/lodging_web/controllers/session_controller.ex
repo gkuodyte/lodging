@@ -25,7 +25,7 @@ defmodule LodgingWeb.SessionController do
         verified_account_redirect(
           conn,
           user,
-          Routes.user_path(Endpoint, :home),
+          Routes.user_path(Endpoint, :home, user.id),
           Routes.account_path(Endpoint, :send_email_verification, user.id)
         )
 
@@ -35,7 +35,7 @@ defmodule LodgingWeb.SessionController do
         verified_account_redirect(
           conn,
           business,
-          Routes.company_path(Endpoint, :home, business.id),
+          Routes.listing_path(Endpoint, :home, business.id),
           Routes.business_path(Endpoint, :send_email_verification, business.id)
         )
 
@@ -52,7 +52,6 @@ defmodule LodgingWeb.SessionController do
       conn
       |> put_session(:current_account_id, account.id)
       |> put_session(:account_type, account.account_type)
-      |> IO.inspect(label: "session")
       |> configure_session(renew: true)
       |> redirect(to: new_account_path)
       |> halt()

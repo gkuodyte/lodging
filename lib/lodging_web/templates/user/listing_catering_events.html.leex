@@ -1,0 +1,47 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+  <div class="mx-auto flex">
+    <div class="order-2">
+      <h2>Hello <%= @user.name %> </h2>
+      <h3>Please enter your catering and events choices</h3>
+    </div>
+  </div>
+
+  <div>
+    <br>
+    <%= if @listing.catering do %>
+      <h3><%= if @listing.tailorable_menu, do: "The menu can be tailored to your needs.", else: "Unfortunately the menu cannot be tailored." %> </h3>
+      <h3>The property can provide meals to <%= @listing.meals_number %> guests. A meals average price is <%= @listing.meals_price_range %> pounds. </h3>
+      
+      <br>
+      <div>
+        <h3>Catering</h3>
+        <%= checkbox f, :catering %> Would you like to book catering?
+      </div>
+
+      <%= if @listing.tailorable_menu do %>
+        <div>
+          <h3>Tailored menu</h3>
+          <%= checkbox f, :tailorable_menu %> Would you like to request custom menu?
+        </div>
+      <% end %>
+
+      <div>
+      <h3>Meals</h3>
+      <% max_meals = @listing.meals_number %>
+      <%= select f, :meals_number, 1..max_meals, class: "c-standard_input"%> For how many guests would you like to book catering?
+      </div>
+    <% end %>
+
+    <br>
+      <%= if @listing.events do %>
+        <h3> This property can host <%= @listing.events_type %>. </h3>
+        <div>
+          <h4>Events</h4>
+            <%= checkbox f, :events, class: "c-standard_input" %> Would you like to book events?
+        </div>
+    <% end %>
+  </div>
+</form>
+
+<button phx-click="previous" > Back </button>
+<button phx-click="next" > Next </button>

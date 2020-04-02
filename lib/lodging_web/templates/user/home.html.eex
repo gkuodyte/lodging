@@ -1,1 +1,6 @@
-<h1> this is home page </h1>
+<h3> Hello <%= @user.name %>! </h3>
+<%= if @listings == [] do %>
+<h1> There are no listings yet! Please check in later! </h1>
+<% else %>
+<button><%= link("Search for your perfect listing",to: Routes.user_path(@conn, :view_listings, @user.id)) %></button>
+<% end %>

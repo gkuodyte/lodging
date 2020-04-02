@@ -6,7 +6,7 @@ defmodule LodgingWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -60,6 +60,9 @@ defmodule LodgingWeb.Router do
 
     get("/:user_id/verificationuser", AccountController, :send_email_verification)
     get("/:business_id/verificationbusiness", BusinessController, :send_email_verification)
+    resources "/uploads", UploadController, only: [:index, :new, :create, :show] do
+      get("/thumbnail", UploadController, :thumbnail, as: "thumbnail")
+    end
   end
 
   scope "/", LodgingWeb do
@@ -72,15 +75,24 @@ defmodule LodgingWeb.Router do
   scope "/", LodgingWeb do
     pipe_through [:browser, :user]
 
-    get("/home", UserController, :home)
+    get("/:user_id/home", UserController, :home)
+    get("/:user_id/listings", UserController, :view_listings)
+    get("/:user_id/listings/:listing_id/listing", UserController, :open_listing)
+    get("/:user_id/listings/:listing_id/listing/enquire", UserController, :enquire_listing)
+    get("/:user_id/enquiries", UserController, :view_enquiries)
+    get("/:user_id/enquiries/:enquiry_id/enquiry", UserController, :open_enquiry)
+    get("/:user_id/enquiries/:enquiry_id/enquiry/edit", UserController, :edit_enquiry)
+    put("/:user_id/enquiries/:enquiry_id/enquiry/edit", UserController, :update_enquiry)
   end
 
-  # Company scope
+  # Listings scope
   scope "/", LodgingWeb do
     pipe_through [:browser, :business]
 
-    get("/:business_id/index", CompanyController, :home)
-    get("/:business_id/form", CompanyController, :form)
-    post("/:business_id/form", CompanyController, :sign_up)
+    get("/:business_id/index", ListingController, :home)
+    get("/:business_id/addnewlisting", ListingController, :add_new_listing)
+    get("/:business_id/alllistings", ListingController, :view_all_listings)
+    get("/:business_id/listing/:listing_id/edit", ListingController, :edit_listing)
+    get("/:business_id/listing/:listing_id/delete", ListingController, :delete_listing)
   end
 end

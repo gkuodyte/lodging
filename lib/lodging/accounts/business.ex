@@ -7,6 +7,7 @@ defmodule Lodging.Accounts.Business do
 
   import Ecto.Changeset
   alias Lodging.Accounts.Encryption
+  alias Lodging.Accounts.Listing
   @missing_field "Please fill in this field."
 
   @primary_key {:id, :binary_id, auto_generate: false}
@@ -28,6 +29,8 @@ defmodule Lodging.Accounts.Business do
     field :password, :string, null: false, virtual: true
     field :password_confirmation, :string, null: false, virtual: true
     field :encrypted_password, :string
+
+    has_many :listings, Listing
 
     timestamps()
   end

@@ -1,0 +1,39 @@
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="mx-auto flex">
+  <div class="order-2">
+    <h2>Hello <%= @business.username %> </h2>
+    <h3>Please complete your listing</h3>
+    <h3>Where is your property located?</h3>
+  </div>
+</div>
+
+<div>
+  <div>
+  <h4>Country / Region</h4>
+    <%= select(f, :country, ["United Kingdom": "uk"]) %>
+  </div>
+
+  <div>
+    <h4>Street address</h4>
+    <%= text_input f, :street_address, class: "c-standard_input", required: true %>
+  </div>
+
+  <div>
+    <h4>Street address 2 (optional)</h4>
+    <%= text_input f, :street_address2, class: "c-standard_input" %>
+  </div>
+
+  <div>
+    <h4>City</h4>
+    <%= text_input f, :city, class: "c-standard_input", required: true %>
+  </div>
+
+  <div>
+    <h4>Postcode</h4>
+    <%= text_input f, :postcode, class: "c-standard_input", required: true %>
+  </div>
+</div>
+</form>
+
+<button phx-click="previous" > Back </button>
+<button phx-click="next" > Next </button>

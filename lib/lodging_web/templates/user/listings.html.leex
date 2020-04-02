@@ -1,0 +1,39 @@
+<h2> Search for a listing here! </h2>
+<form phx-change="update_filter" onsubmit="return false;">
+  <div>
+    <h1> Filters </h1>
+      <div>
+        <h4>Choose a city</h4>
+          <select name="filter[city]">
+              <option value="<%= nil %>">Not specified</option>
+            <%= for city <- @cities do %>
+              <option value="<%= city %>" <%= if @filter.city == city, do: "selected" %> > <%= city %></option>
+            <% end %>
+          </select>
+      </div>
+      <h4> Choose services </h4>
+      <div>
+        <input type="checkbox" name="filter[accommodation]" <%= if @filter.accommodation, do: "checked" %>> Accommodation
+      </div>
+      <div>
+        <input type="checkbox" name="filter[catering]" <%= if @filter.catering, do: "checked" %>> Catering
+      </div>
+      <div>
+        <input type="checkbox" name="filter[events]" <%= if @filter.events, do: "checked" %>> Events
+      </div>
+      <div>
+        <input type="number" name="filter[guests_number]" <%= if @filter.guests_number != nil, do: @filter.guests_number %>> Guest number
+      </div>
+  </div>
+  <br>
+<%= for listing <- @shown_listings do %>
+<div>
+    <div>
+    <h2> <%= listing.title %> </h2>
+    <h2><em><%= Map.get(listing.config, "description")%></em></h2>
+    <button><%= link("View", to: Routes.user_path(LodgingWeb.Endpoint, :open_listing, @user.id, listing.id)) %></button>
+    </div>
+</div>
+<br>
+<% end %>
+</form>
