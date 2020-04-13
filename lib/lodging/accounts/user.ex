@@ -68,6 +68,7 @@ defmodule Lodging.Accounts.User do
     |> validate_password()
     |> encrypt_password()
     |> validate_required(:encrypted_password)
+    |> IO.inspect()
   end
 
   def verified_changeset(user, attrs) do
@@ -76,14 +77,6 @@ defmodule Lodging.Accounts.User do
     |> validate_required([:verified])
   end
 
-  def password_changeset(user, attrs) do
-    user
-    |> cast(attrs, [:password, :password_confirmation])
-    |> validate_required([:password, :password_confirmation], message: @missing_field)
-    |> validate_password()
-    |> encrypt_password()
-    |> validate_required(:encrypted_password)
-  end
 
   defp validate_password(%{changes: %{password: password}} = changeset) do
     # Check length and content and return only 1 error even if both fails.
