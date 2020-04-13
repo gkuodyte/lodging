@@ -74,7 +74,7 @@ defmodule Lodging.Accounts.Business do
         :verified,
         :id
       ],
-      message: "did you forget this one? hehe"
+      message: "Did you forget this one?"
     )
     |> unique_constraint(:email_address)
     |> unique_constraint(:username)

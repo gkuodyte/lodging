@@ -63,7 +63,7 @@ defmodule Lodging.Accounts.Listing do
       [
         :title
       ],
-      message: "did you forget this one? hehe"
+      message: "Did you forget this one?"
     )
     |> validate_postcode()
     |> validate_contact_number()
