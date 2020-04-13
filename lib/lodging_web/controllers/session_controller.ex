@@ -20,23 +20,21 @@ defmodule LodgingWeb.SessionController do
   Route to generate a new login session.
   """
   def create(conn, %{"session" => auth_params}) do
-    case Auth.login_user(auth_params) do
-      {:ok, user} ->
+    case get_account(auth_params) do
+      {:ok, :user, account} ->
         verified_account_redirect(
           conn,
-          user,
-          Routes.user_path(Endpoint, :home, user.id),
-          Routes.account_path(Endpoint, :send_email_verification, user.id)
+          account,
+          Routes.user_path(Endpoint, :home, account.id),
+          Routes.account_path(Endpoint, :send_email_verification, account.id)
         )
 
-      {:error, :wrong_table} ->
-        {:ok, business} = Auth.login_business(auth_params)
-
+      {:ok, :business, account} ->
         verified_account_redirect(
           conn,
-          business,
-          Routes.listing_path(Endpoint, :home, business.id),
-          Routes.business_path(Endpoint, :send_email_verification, business.id)
+          account,
+          Routes.listing_path(Endpoint, :home, account.id),
+          Routes.business_path(Endpoint, :send_email_verification, account.id)
         )
 
       {:error, _reason} ->
@@ -47,25 +45,36 @@ defmodule LodgingWeb.SessionController do
     end
   end
 
-  defp verified_account_redirect(conn, account, new_account_path, new_redirect_path) do
-    if account.verified do
+  defp get_account(auth_params) do
+    user_result = Auth.login_user(auth_params)
+    business_result = Auth.login_business(auth_params)
+
+    cond do
+      OK.success? user_result -> {:ok, :user, elem(user_result, 1)}
+      OK.success? business_result -> {:ok, :business, elem(business_result, 1)}
+      true -> {:error, :account_does_not_exist}
+    end
+  end
+
+  defp verified_account_redirect(conn, account, new_account_path, _new_redirect_path) do
+    # if account.verified do
       conn
       |> put_session(:current_account_id, account.id)
       |> put_session(:account_type, account.account_type)
       |> configure_session(renew: true)
       |> redirect(to: new_account_path)
       |> halt()
-    else
-      conn
-      |> put_flash(:error, [
-        "You arent verified!",
-        link("Click here to send a new email",
-          to: new_redirect_path
-        ),
-        "."
-      ])
-      |> render("new.html")
-    end
+    # else
+    #   conn
+    #   |> put_flash(:error, [
+    #     "You arent verified!",
+    #     link("Click here to send a new email",
+    #       to: new_redirect_path
+    #     ),
+    #     "."
+    #   ])
+    #   |> render("new.html")
+    # end
   end
 
   def delete(conn, _params) do
