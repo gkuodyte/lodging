@@ -1,56 +1,55 @@
-<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
-<div class="mx-auto flex">
-  <div class="order-2">
-    <h2>Hello <%= @business.username %> </h2>
-    <h3>Please complete your listing</h3>
-    <h3>Please give additional details about your listing</h3>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.username %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl">Please add last details </label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, @business.id)) %></button>
   </div>
 </div>
-<div>
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="w-3/5 lg:w-2/5 lg:mb-6">
   <div>
-  <h4>Title</h4>
-    <%= text_input f, :title, class: "c-standard_input", required: true %>
+  <label class="text-purple-700 font-medium text-2xl pt-3">Title</label>
+    <%= text_input f, :title, required: true %>
   </div>
 
-  <h4>Description</h4>
-    <%= text_input f, :description, class: "c-standard_input", required: true %>
-  </div>
-
-  <div>
-    <h4>Images</h4>
-    <button> Add </button>
+  <label class="text-purple-700 font-medium text-2xl pt-3">Description</label>
+    <%= textarea f, :description, required: true %>
   </div>
 
   <%= if Map.get(@inputs, "catering") == "true" do %>
   <div>
-  <h3>Catering</h3>
+  <label class="text-purple-700 font-medium text-2xl pt-3">Catering</label>
   <%= checkbox f, :tailorable_menu %> Can your menu be tailored?
   </div>
 
   <div>
-  <h3>Meals</h3>
-  <%= select f, :meals_number, 1..100, class: "c-standard_input"%> For how many guests can your property provide meals?
+  <label class="text-purple-700 font-medium text-2xl pt-3">Meals</label>
+  <%= select f, :meals_number, 1..100%> For how many guests can your property provide meals?
   </div>
 
   <div>
-  <h3>Meals price</h3>
-  <%= select f, :meals_price_range, 10..100, class: "c-standard_input"%> Whats the average price of your meals?
+  <label class="text-purple-700 font-medium text-2xl pt-3">Meals price</label>
+  <%= select f, :meals_price_range, 10..100%> Whats the average price of your meals?
   </div>
   <% end %>
 
   <%= if Map.get(@inputs, "events") == "true" do %>
   <div>
-  <h4>Events type</h4>
-    <%= text_input f, :events_type, class: "c-standard_input" %> Please provide a description of what type of events you can host
+  <label class="text-purple-700 font-medium text-2xl pt-3">Events type</label>
+    <%= text_input f, :events_type %> Please provide a description of what type of events you can host
   </div>
   <% end %>
 
-  <div>
-  <h4>Contact number (Optional) </h4>
-    <%= text_input f, :contact_number, class: "c-standard_input" %> Please enter your contact number for getting in touch about the listing
+  <div class="w-3/5 lg:w-2/5 lg:mb-6">
+  <label class="text-purple-700 font-medium text-2xl pt-3">Contact number (Optional) </label>
+    <%= text_input f, :contact_number %> Please enter your contact number for getting in touch about the listing
   </div>
 
 </div>
 </form>
-<button phx-click="previous" > Back </button>
-<button phx-click="submit" > Submit </button>
+
+<button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600" phx-click="previous" > Back </button>
+<button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" phx-click="submit" > Submit </button>

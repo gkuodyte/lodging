@@ -1,0 +1,29 @@
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl">Here you can view all of your received enquiries</label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></button>
+  </div>
+</div>
+<%= for enquiry <- @enquiries do %>
+  <% [listing] = Enum.filter(@listings, fn listing -> listing.id == enquiry.listing_id end) %>
+  <div>
+    <% user = Lodging.Accounts.get_user!(enquiry.user_id) %>
+    <label class="text-purple-800 font-medium text-2xl pt-6"> Created: <%= enquiry.inserted_at %></label>
+    <label class="text-purple-800 font-medium text-2xl"> For listing: <%= listing.title %></label>
+    <label class="text-purple-800 font-medium text-2xl"> User: <%= user.name %> <%= user.lastname %> </label>
+    <label class="text-gray-700 font-medium"> Services booked:<%= if enquiry.accommodation, do: " accommodation " %><%= if enquiry.catering, do: "catering" %> <%= if enquiry.events, do: " and events."%>.
+    <div class="c-inline">
+      <div>
+        <label class="text-gray-700 font-medium"> From: <%= if enquiry.date_from != nil, do: enquiry.date_from, else: "Not selected" %></label>
+      </div>
+      <div class="pl-5">
+        <label class="text-gray-700 font-medium"> To: <%= if enquiry.date_to != nil, do: enquiry.date_to, else: "Not selected" %></label>
+      </div>
+    </div>
+  </div>
+  <button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("View", to: Routes.listing_path(LodgingWeb.Endpoint, :view_enquiry, @business.id, enquiry.id)) %></button>
+<% end %>

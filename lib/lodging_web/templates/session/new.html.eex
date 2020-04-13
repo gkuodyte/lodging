@@ -1,27 +1,28 @@
-<div class="c-business-button-position">
-<button type="button" class="c-business-button"> Business </button>
+<div class="c-button_business">
+  <button class="bg-white hover:bg-white text-purple-800 font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Business registration", to: Routes.business_path(LodgingWeb.Endpoint, :new)) %></button>
 </div>
 
-<div class="pt-8 lg:pl-8 text-center lg:text-left lg:w-2/5">
-    <h2 class="c-main-title text-red-500"> YOUR ONE STOP SERVICES BOOKING PLATFORM </h2>
+<div class="pt-8 lg:pl-8 text-center lg:text-left lg:w-2/5 pb-10">
+  <h2 class="text-purple-800 font-medium text-6xl"> YOUR ONE STOP SERVICES BOOKING PLATFORM </h2>
 </div>
 <div class="c-main-page-logo">
     <%# logo %>
 </div>
 
-<div class="w-4/5 m-auto lg:m-3 md:w-3/5 lg:ml-8">
+  <div class="w-4/5 md:w-2/5 lg:ml-8 c-box">
     <%= form_for @conn, Routes.session_path(@conn, :new), [as: :session], fn f -> %>
-  <br>
-  <div class="c-user-login-inputs">
-    <h3 class="c-username-input">Username</h3>
-    <%= text_input f, :username, class: "c-standard_input lg:w-3/5" %>
+    <br>
+    <div class="pb-5">
+      <label class="text-purple-700 font-medium text-3xl">Username</label>
+      <%= text_input f, :username, class: "lg:w-3/5" %>
+    </div>
+    <div class="pb-5">
+      <label class="text-purple-700 font-medium text-3xl">Password</label>
+      <%= password_input f, :password, class: "lg:w-3/5" %>
+    </div>
+    <div class="lg:w-3/5 pt-5">
+      <%= submit "Login", class: "bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" %>
+      <button class="bg-white hover:bg-white text-purple-800 font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Register", to: Routes.account_path(LodgingWeb.Endpoint, :new)) %></button>
+    </div>
   </div>
-  <div class="c-user-login-inputs">
-    <h3 class="c-password-input">Password</h3>
-    <%= password_input f, :password, class: "c-standard_input lg:w-3/5" %>
-  </div>
-  <div class="c-login-button">
-    <%= submit "Login", class: "shadow-md c-btn" %>
-  </div>
-  <% end %>
-</div>
+<% end %>

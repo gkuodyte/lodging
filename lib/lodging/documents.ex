@@ -17,7 +17,7 @@ defmodule Lodging.Documents do
 		filename: filename,
 		path: tmp_path,
 		content_type: content_type
-	}) do
+	}, listing_id) do
 
 		hash =
 		 	File.stream!(tmp_path, [], 2048)
@@ -29,7 +29,8 @@ defmodule Lodging.Documents do
 				 	Upload.changeset(%Upload{},%{
 				 		filename: filename,
 				 		content_type: content_type,
-				 		hash: hash, size: size
+						 hash: hash, size: size,
+						 listing_id: listing_id
 				 	}) |> Repo.insert(),
 
 				 :ok <- File.cp(tmp_path, Upload.local_path(upload.id, filename)),

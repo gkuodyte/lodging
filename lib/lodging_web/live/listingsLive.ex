@@ -2,7 +2,8 @@ defmodule LodgingWeb.Live.ListingsLive do
   use Phoenix.LiveView
   alias LodgingWeb.Router.Helpers, as: Routes
   alias Lodging.Accounts.Listing
-  alias Lodging.Listings
+  alias Lodging.{Listings, Documents}
+  alias Lodging.Documents.Upload
 
   @pages [
     "company_form_new.html",
@@ -88,11 +89,11 @@ defmodule LodgingWeb.Live.ListingsLive do
   def handle_event("submit", _values, %{assigns: %{inputs: inputs, business: business}} = socket) do
     Listings.create_listing(inputs)
     |> case do
-      {:ok, _} ->
+      {:ok, listing} ->
         {:noreply,
         socket
         |> put_flash(:info, "Listing has been created successfully")
-        |> redirect(to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, business.id))
+        |> redirect(to: Routes.upload_path(LodgingWeb.Endpoint, :new, business.id, listing.id))
       }
 
       {:error, _} ->

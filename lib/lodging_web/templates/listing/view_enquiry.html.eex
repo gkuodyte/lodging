@@ -1,0 +1,31 @@
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :view_enquiries, @business.id)) %></button>
+  </div>
+</div>
+  <div>
+    <% user = Lodging.Accounts.get_user!(@enquiry.user_id) %>
+    <label class="text-purple-800 font-medium text-2xl pt-6"> Created: <%= @enquiry.inserted_at %></label>
+    <label class="text-purple-800 font-medium text-2xl"> For listing: <%= @listing.title %> </label>
+    <label class="text-purple-800 font-medium text-2xl"> User: <%= user.name %> <%= user.lastname %> </label>
+    <label class="text-gray-700 font-medium"> Services booked:<%= if @enquiry.accommodation, do: " accommodation " %><%= if @enquiry.catering, do: "catering" %> <%= if @enquiry.events, do: " and events."%>.
+    <label class="text-gray-700 font-medium"> Number of guests: <%= if @enquiry.guests_number != nil, do: @enquiry.guests_number, else: "none" %>
+    <%= if @enquiry.catering do %>
+      <label class="text-gray-700 font-medium"> Tailorable menu: <%= if @enquiry.tailorable_menu != nil, do: "Yes", else: "No" %>
+      <label class="text-gray-700 font-medium"> Number of guests for catering: <%= if @enquiry.meals_number != nil, do: @enquiry.meals_number, else: "none" %>
+    <% end %>
+    <div class="c-inline">
+      <div>
+        <label class="text-gray-700 font-medium"> From: <%= if @enquiry.date_from != nil, do: @enquiry.date_from, else: "Not selected" %></label>
+      </div>
+      <div class="pl-5">
+        <label class="text-gray-700 font-medium"> To: <%= if @enquiry.date_to != nil, do: @enquiry.date_to, else: "Not selected" %></label>
+      </div>
+    </div>
+    <label class="text-purple-800 font-medium text-2xl"> Users comment: <%= if @enquiry.comment != nil, do: @enquiry.comment, else: "Not added" %></label>
+    <label class="text-purple-800 font-medium text-2xl"> Contact number: <%= if @enquiry.contact_number != nil, do: @enquiry.contact_number, else: "Not provided" %></label>
+  </div>

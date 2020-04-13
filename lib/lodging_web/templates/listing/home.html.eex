@@ -1,6 +1,36 @@
-<h1>HELLO <%= @business.username %> </h1>
-<%= if Map.get(@business, :listings) != [] do %>
-<button><%= link("View your existing listings here",to: Routes.listing_path(@conn, :view_all_listings, @business.id)) %></button>
-<% else %>
-<button><%= link("Create a new listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
-<% end %>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <label class="text-purple-800 font-medium text-5xl pt-6">Hello <%= @business.username %>!</label>
+  </div>
+  <div class="c-button_business pb-48">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Logout", to: Routes.session_path(LodgingWeb.Endpoint, :delete)) %></button>
+  </div>
+</div>
+
+<div class="c-move-containers">
+  <div class="c-listing-box pb-20">
+    <%= if Map.get(@business, :listings) == [] do %>
+      <label class="italic text-purple-700 font-medium text-3xl"> Create your first listing </label>
+      <div class="pl-32 pt-5">
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("Create your first listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
+      </div>
+    <% else %>
+      <label class="italic text-purple-700 font-medium text-3xl"> View your existing listings </label>
+      <label class="italic text-purple-700 font-medium text-3xl"> here!</label>
+      <div class="pl-32 pt-5">
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"> <%= link("View",to: Routes.listing_path(@conn, :view_all_listings, @business.id)) %></button>
+      </div>
+    <% end %>
+  </div>
+  <br>
+
+  <div class="c-listing-box pb-20">
+      <label class="italic text-purple-700 font-medium text-3xl"> View received enquiries! </label>
+      <div class="pl-32 pt-5">
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("View",to: Routes.listing_path(@conn, :view_enquiries, @business.id)) %></button>
+      </div>
+  </div>
+</div>
+
+
+

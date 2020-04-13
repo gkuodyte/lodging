@@ -1,57 +1,59 @@
 <%= form_for @changeset, Routes.account_path(@conn, :create), fn f -> %>
-
-<div class=" mb-12 lg:text-left w-4/5 md:w-3/5 lg:w-4/5 mx-auto flex flex-row pt-8">
-  <div class="order-2">
-    <h2 class="orange_h2">Lodging</h2>
-    <h3>Register here</h3>
+  <div class="text-center lg:text-left pb-10">
+    <label class="text-purple-800 font-semibold text-6xl pt-5">Lodging</label>
+    <label class="text-purple-700 font-medium text-4xl">User registration</label>
   </div>
-</div>
-<div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row lg:flex flex-row">
-  <div class="mb-4 lg:mx-2 text-center lg:text-left">
-    <h4 class="mb-1 text-sm">Username</h4>
-    <%= text_input f, :username, autofocus: true, class: "c-standard_input #{if has_error(f, :username), do: "border-2 border-red-600"}"%>
-  </div>
+  
+  <div class="c-box">
+  <div class="w-3/5 lg:w-4/5 lg:mb-6 lg:flex">
+    <div class="mb-4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">Username</h4>
+      <%= text_input f, :username, autofocus: true, required: true%>
+    </div>
 
-  <div class="mb-4 lg:mx-2 text-center lg:text-left">
-    <h4 class="mb-1 text-sm">Password</h4>
-    <%= password_input f, :password, class: "c-standard_input #{if has_error(f, :password), do: "border-2 border-red-600"}" %>
-    <%# <%= error_tag f, :password %>  
-  </div>
+    <div class="mb-4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">Password</h4>
+      <%= password_input f, :password, required: true %>
+    </div>
 
-  <div class="mb-4 max-w-1/4 lg:mx-2 text-center lg:text-left">
-    <h4 class="mb-1 text-sm">Confirm password</h4>
-    <%= password_input f, :password_confirmation, class: "c-standard_input #{if has_error(f, :password_confirmation), do: "border-2 border-red-600"}" %>
-    <%# <%= error_tag f, :password_confirmation %> 
-  </div>
-</div>
-
-<div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row">
-  <div class="mb-4 lg:mx-2 text-center lg:text-left">
-    <h4 class="text-center lg:text-left mb-1">First name</h4>
-    <%= text_input f, :name, class: "c-standard_input #{if has_error(f, :name), do: "border-2 border-red-600"}" %>
+    <div class="mb-4 max-w-1/4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">Confirm password</h4>
+      <%= password_input f, :password_confirmation, required: true %>
+    </div>
   </div>
 
-  <div class="w-3/5 lg:w-4/5 mx-auto mb-16 lg:mb-6 lg:flex flex-row">
-  <div class="mb-4 lg:mx-2 text-center lg:text-left">
-    <h4 class="text-center lg:text-left mb-1">Last name</h4>
-    <%= text_input f, :lastname, class: "c-standard_input #{if has_error(f, :lastname), do: "border-2 border-red-600"}" %>
+  <div class="w-3/5 lg:w-4/5 lg:mb-6 lg:flex">
+    <div class="mb-4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">First name</h4>
+      <%= text_input f, :name, required: true %>
+    </div>
+
+    <div class="mb-4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">Last name</h4>
+      <%= text_input f, :lastname, required: true %>
+    </div>
+
+    <div class="mb-4 lg:mx-2 text-center lg:text-left">
+      <h4 class="text-purple-700 font-medium text-3xl">Email address</h4>
+      <%= text_input f, :email_address, required: true %>
+    </div>
   </div>
 
-  <div class="mb-4 lg:mx-2 text-center lg:text-left">
-    <h4 class="mb-1 text-sm">Email address</h4>
-    <%= text_input f, :email_address, class: "c-standard_input #{if has_error(f, :email_address), do: "border-2 border-red-600"}" %>
-  </div>
-
-  <div>
-  <%= checkbox f, :over_18, required: true %> Please tick if you're over 18
-  </div>
+  <div class="w-3/5 lg:w-4/5 lg:mb-6 lg:flex">
+    <div class="pr-6">
+      <%= checkbox f, :over_18, required: true %> Over 18
+    </div>
 
     <div>
-  <%= checkbox f, :terms_and_conditions, required: true %> Please accepts terms and conditions
+      <%= checkbox f, :terms_and_conditions, required: true %> Accepted Terms and Conditions
+    </div>
   </div>
 
-
-<div class="w-3/5 lg:w-4/5 mx-auto flex flex-col lg:flex-row mb-4">
-  <%= submit "Submit", class: "c-btn c-btn--orange new_user_btn shadow-md" %>
-  <% end%>
+  <div class="w-3/5 lg:w-4/5 lg:mb-6 lg:flex pt-6">
+    <div class="pr-6">
+      <%= submit "Register", class: "bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" %>
+    </div>
+    <button class="bg-white hover:bg-white text-purple-800 font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Cancel", to: Routes.session_path(LodgingWeb.Endpoint, :new)) %></button>
+  </div>
 </div>
+<% end %>

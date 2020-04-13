@@ -1,39 +1,41 @@
-<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
-<div class="mx-auto flex">
-  <div class="order-2">
-    <h2>Hello <%= @business.username %> </h2>
-    <h3>Please complete your listing</h3>
-    <h3>Where is your property located?</h3>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.username %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl">Please provide the property's address </label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, @business.id)) %></button>
   </div>
 </div>
-
-<div>
+<%= f = form_for @changeset, "#", [phx_change: :add_input] %>
+<div class="w-3/5 lg:w-2/5 lg:mb-6">
   <div>
-  <h4>Country / Region</h4>
+  <label class="text-purple-700 font-medium text-2xl pt-3">Country / Region</label>
     <%= select(f, :country, ["United Kingdom": "uk"]) %>
   </div>
 
   <div>
-    <h4>Street address</h4>
-    <%= text_input f, :street_address, class: "c-standard_input", required: true %>
+    <label class="text-purple-700 font-medium text-2xl pt-3">Street address</label>
+    <%= text_input f, :street_address, required: true %>
   </div>
 
   <div>
-    <h4>Street address 2 (optional)</h4>
-    <%= text_input f, :street_address2, class: "c-standard_input" %>
+    <label class="text-purple-700 font-medium text-2xl pt-3">Street address 2 (optional)</label>
+    <%= text_input f, :street_address2 %>
   </div>
 
   <div>
-    <h4>City</h4>
-    <%= text_input f, :city, class: "c-standard_input", required: true %>
+    <label class="text-purple-700 font-medium text-2xl pt-3">City</label>
+    <%= text_input f, :city, required: true %>
   </div>
 
   <div>
-    <h4>Postcode</h4>
-    <%= text_input f, :postcode, class: "c-standard_input", required: true %>
+    <label class="text-purple-700 font-medium text-2xl pt-3">Postcode</label>
+    <%= text_input f, :postcode, required: true %>
   </div>
 </div>
 </form>
 
-<button phx-click="previous" > Back </button>
-<button phx-click="next" > Next </button>
+<button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600" phx-click="previous" > Back </button>
+<button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" phx-click="next" > Next </button>

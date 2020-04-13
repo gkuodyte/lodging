@@ -1,0 +1,116 @@
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl">Please edit your listing here</label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, @business.id)) %></button>
+  </div>
+</div>
+
+<%= form_for @changeset, Routes.listing_path(@conn, :update_listing, @business.id, @listing.id), [multipart: true], fn f -> %>
+  <div>
+    <div class="w-3/5 lg:w-2/5 lg:mb-6">
+      <label class="text-purple-700 font-medium text-2xl pt-3">Title</label>
+      <%= text_input f, :title, value: @listing.title %>
+
+      <label class="text-purple-700 font-medium text-2xl pt-3">Description</label>
+      <%= textarea f, :description, value: Map.get(@listing.config, "description") %>
+
+      <label class="text-purple-700 font-medium text-2xl pt-3">Contact number (Optional) </label>
+      <%= text_input f, :contact_number, value: @listing.contact_number %> Please enter your contact number for getting in touch about the listing
+
+      <label class="text-purple-700 font-medium text-2xl pt-3">Images </label>
+      <%= file_input f, :upload, class: "form-control" %>
+    </div>
+
+    <div class="w-3/5 lg:w-2/5 lg:mb-6 pt-5"> 
+    <label class="text-gray-700 font-normal text-2xl"> Property's address </label>
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Country / Region</label>
+        <%= select(f, :country, ["United Kingdom": "uk"]) %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Street address</label>
+        <%= text_input f, :street_address, value: @listing.street_address %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Street address 2 (optional)</label>
+        <%= text_input f, :street_address2, value: @listing.street_address2 %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">City</label>
+        <%= text_input f, :city, value: @listing.city %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Postcode</label>
+        <%= text_input f, :postcode, value: @listing.postcode %>
+      </div>
+    </div>
+    
+    <%= if @listing.accommodation do %>
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Accommodation</label>
+        <%= checkbox f, :accommodation, autofocus: true, value: @listing.accommodation %> Do you provide accommodation services?
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Choose a property type</label>
+        <%= select(f, :property_type, ["Hotel": "hotel", "Cabins": "cabins", "Bed and Breakfast": "bnb"], value: @listing.property_type) %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">How many rooms does your property have?</label>
+        <%= select f, :rooms_number, 1..50, class: "c-standard_input", value: @listing.rooms_number %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">What will your guests have?</label> 
+        <%= radio_button(f, :rooms_type, "single") %> Single room <br>
+        <%= radio_button(f, :rooms_type, "double") %> Double room <br>
+        <%= radio_button(f, :rooms_type, "both") %> Both types of rooms
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">How many guests can your property accommodate?</label>
+        <%= select f, :guests_number, 1..100, class: "c-standard_input", value: @listing.guests_number %>
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Accommodation price</label>
+        <%= select f, :night_price, 10..100, class: "c-standard_input", value: @listing.night_price %> Whats the average price of a nights stay?
+      </div>
+    <% end %>
+
+    <%= if @listing.catering do %>
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Catering</label>
+        <%= checkbox f, :tailorable_menu, value: @listing.tailorable_menu %> Can your menu be tailored?
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Meals</label>
+        <%= select f, :meals_number, 1..100, class: "c-standard_input", value: @listing.meals_number %> For how many guests can your property provide meals?
+      </div>
+
+      <div>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Meals price</label>
+        <%= select f, :meals_price_range, 10..100, class: "c-standard_input", value: @listing.meals_price_range %> Whats the average price of your meals?
+      </div>
+    <% end %>
+
+    <%= if @listing.events do %>
+      <div class="w-3/5 lg:w-2/5 lg:mb-6 pt-5">
+        <label class="text-purple-700 font-medium text-2xl pt-3">Events type</label>
+        <%= text_input f, :events_type, class: "c-standard_input", value: @listing.events_type %> Please provide a description of what type of events you can host
+      </div>
+    <% end %>
+  </div>
+  <%= submit "Submit", class: "bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" %>
+  <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Cancel", to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, @business.id)) %></button>
+<% end %>

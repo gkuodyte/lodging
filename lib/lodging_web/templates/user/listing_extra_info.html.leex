@@ -1,33 +1,39 @@
+<div class="text-center lg:text-left">
+  <% user = @user.name %>
+  <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
+  <label class="text-gray-700 font-normal text-3xl">Please enter additional information</label>
+</div>
 <%= f = form_for @changeset, "#", [phx_change: :add_input] %>
-  <div class="mx-auto flex">
-    <div class="order-2">
-      <h2>Hello <%= @user.name %> </h2>
-      <h3>Please enter additional information</h3>
-    </div>
-  </div>
   <div>
-  <div>
-    <h4>Dates</h4>
-      <p> From </p>
-      <%= text_input f, :day, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
-      <%= text_input f, :month, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
-      <%= text_input f, :year, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
-      <p> To </p>
-      <%= text_input f, :day_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
-      <%= text_input f, :month_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
-      <%= text_input f, :year_to, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
-  </div>
-
     <div>
-      <h4>Comments (Optional) </h4>
-        <%= text_input f, :comment, class: "c-standard_input" %> Please enter any additional comments or questions
+      <br>
+      <label class="text-purple-700 font-medium text-3xl pt-3">Dates</label>
+      <label class="text-gray-700 font-medium"> From </label>
+      <div class="w-3/5 lg:w-1/5 lg:mb-6 lg:flex">
+        <%= text_input f, :day, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
+        <%= text_input f, :month, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
+        <%= text_input f, :year, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
+      </div>
+      <label class="text-gray-700 font-medium"> To </label>
+      <div class="w-3/5 lg:w-1/5 lg:mb-6 lg:flex">
+        <%= text_input f, :day_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", required: true %>
+        <%= text_input f, :month_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", required: true %>
+        <%= text_input f, :year_to, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", required: true %>
+      </div>
     </div>
 
-    <div>
-      <h4>Contact number (Optional) </h4>
-        <%= text_input f, :contact_number, class: "c-standard_input" %> Please enter your contact number for getting in touch about the enquiry
+    <div class="w-3/5 lg:w-2/5 lg:mb-6">
+      <br>
+      <label class="text-purple-700 font-medium text-3xl pt-3">Comments (Optional) </label>
+      <%= text_input f, :comment %> Please enter any additional comments or questions
+    </div>
+
+    <div class="w-3/5 lg:w-2/5 lg:mb-6 ">
+      <br>
+      <label class="text-purple-700 font-medium text-3xl pt-3">Contact number (Optional) </label>
+      <%= text_input f, :contact_number %> Please enter your contact number for getting in touch about the enquiry
     </div>
   </div>
 </form>
-<button phx-click="previous"> Back </button>
-<button phx-click="submit"> Submit </button>
+<button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600" phx-click="previous"> Back </button>
+<button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" phx-click="submit"> Submit </button>

@@ -1,4 +1,4 @@
-<%= form_for @conn, Routes.upload_path(@conn, :create), 
+<%= form_for @conn, Routes.upload_path(@conn, :create, @business_id, @listing_id), 
                     [multipart: true], fn f-> %>
 
     <%= file_input f, :upload, class: "form-control" %>

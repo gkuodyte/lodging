@@ -1,35 +1,65 @@
- <button><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :view_listings, @user.id)) %></button>
-<h1> <%= @listing.title %> </h1>
-<h2><em><%= Map.get(@listing.config, "description") %></em></h2>
-<div>
-    <br>
-    <h3><%= if @listing.accommodation, do: "This property provides accommodation services.", else: "This property doesn't provide any accommodation services." %></h3> 
-    <%= if @listing.accommodation do %>
-        <h3>Property Type: <%= @listing.property_type %> </h3> 
-        <h3>Has <%= @listing.rooms_number %> rooms and can host <%= @listing.guests_number%> guests. Have <%= if @listing.rooms_type == "both", do: "both single and double", else: @listing.rooms %> rooms. </h3> 
-        <h3>The price for one person nightly stay is <%= @listing.night_price %> pounds.</h3>
-        <div>
-            <h2> Address </h2>
-            <h3> <%= @listing.street_address %> </h3>
-            <h3> <%= if @listing.street_address2 != "", do: @listing.street_address2 %></h3>
-            <h3> <%= @listing.city %></h3>
-            <h3> <%= @listing.postcode %></h3>
-            <h3> <%= if @listing.country == "uk", do: "United Kingdom" %></h3>
-        </div>
-    <% end %>
-    <br>
-    <h3><%= if @listing.catering, do: "This property provides catering services.", else: "This property doesnt provide any catering services." %></h3>
-    <%= if @listing.catering do %>
-        <h3><%= if @listing.tailorable_menu, do: "The menu can be tailored to your needs.", else: "Unfortunately the menu cannot be tailored." %> </h3>
-        <h3>The property can provide meals to <%= @listing.meals_number %> guests. A meals average price is <%= @listing.meals_price_range %> pounds. </h3>
-    <% end %>
-    <br>
-    <h3><%= if @listing.events, do: "This property provides events services.", else: "This property doesnt provide any events services." %> </h3>
-    <%= if @listing.events do %>
-        <h3> This property can host <%= @listing.events_type %>. </h3>
-    <% end %>
-    <br>
-    <h3>This property belongs to: <%= @business.name %> from <%= @business.business_name %> </h3>
-    <h3>Please use this number <%= @listing.contact_number %> to contact for more information. </h3> 
-    <button><%= link("Enquire", to: Routes.user_path(LodgingWeb.Endpoint, :enquire_listing, @user.id, @listing.id)) %></button>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @user.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :view_listings, @user.id)) %></button>
+  </div>
 </div>
+<div class="c-move-containers">
+  <div>
+      <%= for upload <- @uploads do %>
+        <%= if upload.listing_id == @listing.id do %>
+          <%= if upload.thumbnail? do 
+            img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @business.id, @listing.id, upload.id)
+          else
+            img_tag "/images/generic_thumbnail.jpg"
+          end %>
+        <% end %>
+      <% end %>
+  </div>
+  <div>
+    <br>
+    <label class="title-wrap text-purple-800 font-medium text-4xl"><%= @listing.title %></label>
+    <label class="title-wrap italic text-purple-700 font-medium text-3xl"><%= Map.get(@listing.config, "description") %></label>
+    <label class="title-wrap text-gray-700 font-normal text-2xl pt-2">This property belongs to: <%= @business.name %> from <%= @business.business_name %> </label>
+    <label class="title-wrap text-gray-700 font-normal text-2xl">Contact number: <%= @listing.contact_number %></label> 
+    <div class="pl-64 pt-5">
+      <button class="bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Enquire", to: Routes.user_path(LodgingWeb.Endpoint, :enquire_listing, @user.id, @listing.id)) %></button>
+    </div>
+  </div>
+</div>
+<div class="listing-position">
+  <br>
+  <label class="text-purple-800"><%= if @listing.accommodation, do: "This property provides accommodation services.", else: "This property doesn't provide any accommodation services." %></label> 
+  <%= if @listing.accommodation do %>
+    <div>
+    <label class="text-gray-700 font-medium">Property Type: <%= @listing.property_type %> </label> 
+    <label class="text-gray-700 font-normal">Has <%= @listing.rooms_number %> rooms and can host <%= @listing.guests_number%> guests. Have <%= if @listing.rooms_type == "both", do: "both single and double", else: @listing.rooms %> rooms. </label> 
+    <label class="text-gray-700 font-normal">The price for one person nightly stay is <%= @listing.night_price %> pounds.</label>
+    </div>
+    <br>
+    <div>
+        <label class="text-purple-800"> Address </label>
+        <label class="text-gray-700 font-medium"> <%= @listing.street_address %> </label>
+        <label class="text-gray-700 font-medium"> <%= if @listing.street_address2 != "", do: @listing.street_address2 %></label>
+        <label class="text-gray-700 font-medium"> <%= @listing.city %></label>
+        <label class="text-gray-700 font-medium"> <%= @listing.postcode %></label>
+        <label class="text-gray-700 font-medium"> <%= if @listing.country == "uk", do: "United Kingdom" %></label>
+    </div>
+  <% end %>
+  <br>
+  <label class="text-purple-800"><%= if @listing.catering, do: "This property provides catering services.", else: "This property doesnt provide any catering services." %></label>
+  <%= if @listing.catering do %>
+      <label class="text-gray-700 font-medium"><%= if @listing.tailorable_menu, do: "The menu can be tailored to your needs.", else: "Unfortunately the menu cannot be tailored." %> </label>
+      <label class="text-gray-700 font-medium">The property can provide meals to <%= @listing.meals_number %> guests. A meals average price is <%= @listing.meals_price_range %> pounds. </label>
+  <% end %>
+  <br>
+  <label class="text-purple-800"><%= if @listing.events, do: "This property provides events services.", else: "This property doesnt provide any events services." %> </label>
+  <%= if @listing.events do %>
+      <label class="text-gray-700 font-medium"> This property can host <%= @listing.events_type %>. </label>
+  <% end %>
+  <br>
+</div>
+

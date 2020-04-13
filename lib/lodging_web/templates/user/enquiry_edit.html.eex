@@ -1,12 +1,19 @@
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @user.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl">Please edit your enquiry here</label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :open_enquiry, @user.id, @enquiry.id)) %></button>
+  </div>
+</div>
 <%= form_for @changeset, Routes.user_path(@conn, :update_enquiry, @user.id, @enquiry.id), fn f -> %>
   <div>
-    <h2> Please edit your enquiry here </h2>
-  </div>
-
-  <div>
+  <br>
     <%= if @listing.accommodation do %>
       <div>
-        <h4>Accommodation</h4>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Accommodation</label>
         <%= checkbox f, :accommodation, autofocus: true, value: @enquiry.accommodation %> Would you like to book accommodation?
       </div>
 
@@ -18,20 +25,20 @@
 
     <%= if @listing.catering do %>
       <div>
-        <h3>Catering</h3>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Catering</label>
         <%= checkbox f, :catering, value: @enquiry.catering %> Would you like to book catering?
       </div>
 
       <%= if @listing.tailorable_menu do %>
         <div>
-          <h3>Tailored menu</h3>
+          <label class="text-purple-700 font-medium text-2xl pt-3">Tailored menu</label>
           <%= checkbox f, :tailorable_menu, value: @enquiry.tailorable_menu %> Would you like to request custom menu?
         </div>
       <% end %>
 
       <%= if @enquiry.meals_number do %>
         <div>
-          <h3>Meals</h3>
+          <label class="text-purple-700 font-medium text-2xl pt-3">Meals</label>
           <% max_meals = @listing.meals_number %>
           <%= select f, :meals_number, 1..max_meals, value: @enquiry.meals_number %> For how many guests would you like to book catering?
         </div>
@@ -40,38 +47,44 @@
 
     <%= if @listing.events do %>
       <div>
-        <h4>Events</h4>
+        <label class="text-purple-700 font-medium text-2xl pt-3">Events</label>
           <%= checkbox f, :events, value: @enquiry.events %> Would you like to book events?
       </div>
     <% end %>
 
     <div>
-      <h4>Dates</h4>
-        <p> From </p>
+      <br>
+      <label class="text-purple-700 font-medium text-3xl pt-3">Dates</label>
+      <label class="text-gray-700 font-medium"> From </label>
+      <div class="w-3/5 lg:w-1/5 lg:mb-6 lg:flex">
         <% from_date = @enquiry.date_from %>
         <%= text_input f, :day, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", value: from_date.day, required: true %>
         <%= text_input f, :month, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", value: from_date.month, required: true %>
         <%= text_input f, :year, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", value: from_date.year, required: true %>
-        <p> To </p>
+      </div>
+      <label class="text-gray-700 font-medium"> To </label>
+      <div class="w-3/5 lg:w-1/5 lg:mb-6 lg:flex">
         <% to_date = @enquiry.date_to %>
         <%= text_input f, :day_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "DD", value: to_date.day, required: true %>
         <%= text_input f, :month_to, pattern: "[0-9]*", maxLength: 2, minLength: 2, placeholder: "MM", value: to_date.month, required: true %>
         <%= text_input f, :year_to, pattern: "[0-9]*", maxLength: 4, minLength: 4, placeholder: "YYYY", value: to_date.year, required: true %>
+      </div>
     </div>
 
-    <div>
-      <h4>Comments (Optional) </h4>
+    <div class="w-3/5 lg:w-2/5 lg:mb-6">
+      <br>
+      <label class="text-purple-700 font-medium text-2xl pt-3">Comments (Optional) </label>
       <%= text_input f, :comment, value: @enquiry.comment %>
     </div>
 
-    <div>
-      <h4>Contact number (Optional) </h4>
+    <div class="w-3/5 lg:w-2/5 lg:mb-6">
+      <label class="text-purple-700 font-medium text-2xl pt-3">Contact number (Optional) </label>
       <%= text_input f, :contact_number, value: @enquiry.contact_number %> Please enter your contact number for getting in touch about the enquiry
     </div>
   </div>
 
   <div>
-    <%= submit "Submit" %>
+    <%= submit "Submit", class: "bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" %>
   </div>
 
 <% end %>

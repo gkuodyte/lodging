@@ -44,4 +44,10 @@ defmodule Lodging.Listings do
     Repo.all(Listing)
     Ecto.Adapters.SQL.query!(Lodging.Repo, "SELECT city FROM listings ORDER BY city ASC")
   end
+
+  def update_listing_info(%Listing{} = listing, attrs) do
+    listing
+    |> Listing.changeset(attrs)
+    |> Repo.update()
+  end
 end

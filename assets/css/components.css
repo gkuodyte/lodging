@@ -1,0 +1,51 @@
+.c-button_business {
+    padding-left: 80%;
+    padding-top: 10px;
+}
+
+.c-box {
+    background-color: #FAFAFF;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.c-listing-box {
+    background: url(/images/background.png);
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+    padding: 50px;
+    margin: 20px;
+  }
+
+.c-move-containers {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.c-inline {
+    display: flex;
+}
+
+.c-move-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.image-flex {
+    min-width: 300px;
+    max-width: 300px;
+    height: 170px;
+}
+
+.title-wrap {
+    width: 300px;
+    word-wrap: break-word;
+    text-align: center;
+}
+  
+.listing-position {
+    padding-left: 215px;
+}

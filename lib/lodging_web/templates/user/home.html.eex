@@ -1,6 +1,41 @@
-<h3> Hello <%= @user.name %>! </h3>
-<%= if @listings == [] do %>
-<h1> There are no listings yet! Please check in later! </h1>
-<% else %>
-<button><%= link("Search for your perfect listing",to: Routes.user_path(@conn, :view_listings, @user.id)) %></button>
-<% end %>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <label class="text-purple-800 font-medium text-5xl pt-6">Hello <%= @user.name %>!</label>
+  </div>
+  <div class="c-button_business pb-48">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Logout", to: Routes.session_path(LodgingWeb.Endpoint, :delete)) %></button>
+  </div>
+</div>
+
+<div class="c-move-containers">
+  <div class="c-listing-box pb-20">
+    <%= if @listings == [] do %>
+      <label class="italic text-purple-700 font-medium text-3xl"> No listings available yet!</label>
+      <label class="italic text-purple-700 font-medium text-3xl">Please check in later! </label>
+    <% else %>
+      <label class="italic text-purple-700 font-medium text-3xl"> Book unique places to stay and </label>
+      <label class="italic text-purple-700 font-medium text-3xl"> different activities!</label>
+      <div class="pl-32 pt-5">
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("Search",to: Routes.user_path(@conn, :view_listings, @user.id)) %></button>
+      </div>
+    <% end %>
+  </div>
+  <br>
+
+  <div class="c-listing-box pb-20">
+    <%= if @enquiries == [] do %>
+      <label class="italic text-purple-700 font-medium text-3xl"> You havent completed any </label>
+      <label class="italic text-purple-700 font-medium text-3xl"> enquiries yet! Check back when </label>
+      <label class="italic text-purple-700 font-medium text-3xl">you have submitted an enquiry</label>
+    <% else %>
+      <label class="italic text-purple-700 font-medium text-3xl"> Your completed and updated </label>
+      <label class="italic text-purple-700 font-medium text-3xl"> enquiries!</label>
+      <div class="pl-32 pt-5">
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("View",to: Routes.user_path(@conn, :view_enquiries, @user.id)) %></button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+

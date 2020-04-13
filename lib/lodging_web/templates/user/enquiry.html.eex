@@ -1,19 +1,42 @@
-<button><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :view_enquiries, @user.id)) %></button>
-<h1> View your enquiry here </h1>
-<h2> 
-  <div>
-    <% business = Lodging.Accounts.get_business!(@enquiry.business_id) %>
-    <h3> Created: <%= @enquiry.inserted_at %></h3>
-    <h3> Business: <%= business.business_name %> </h3>
-    <h3> Services booked:<%= if @enquiry.accommodation, do: " accommodation " %><%= if @enquiry.catering, do: "catering" %> <%= if @enquiry.events, do: " and events."%>.
-    <h3> Number of guests: <%= if @enquiry.guests_number != nil, do: @enquiry.guests_number, else: "none" %>
-    <h3> Dates
-      <div>
-        <h4> From: <%= if @enquiry.date_from != nil, do: @enquiry.date_from, else: "Not selected" %></h4>
-        <h4> To: <%= if @enquiry.date_to != nil, do: @enquiry.date_to, else: "Not selected" %></h4>
-      </div>
-    </h3>
-    <h3> Your comment: <%= if @enquiry.comment != nil, do: @enquiry.comment, else: "Not added" %></h3>
-    <button><%= link("Edit", to: Routes.user_path(LodgingWeb.Endpoint, :edit_enquiry, @user.id, @enquiry.id)) %></button>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @user.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
   </div>
-</h2>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :view_enquiries, @user.id)) %></button>
+  </div>
+</div>
+<label> 
+  <div>
+    <% listing = Lodging.Listings.get_listing!(@enquiry.listing_id) %>
+    <% business = Lodging.Accounts.get_business!(@enquiry.business_id) %>
+    <%= for upload <- @uploads do %>
+      <%= if upload.listing_id == @enquiry.listing_id do %>
+        <%= if upload.thumbnail? do 
+          img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @enquiry.business_id, @enquiry.listing_id, upload.id)
+        else
+          img_tag "/images/generic_thumbnail.jpg"
+        end %>
+      <% end %>
+    <% end %>
+      <label class="title-wrap text-purple-800 font-medium text-2xl pt-6"> Created: <%= @enquiry.inserted_at %></label>
+      <label class="title-wrap text-purple-800 font-medium text-2xl"> Listing: <%= listing.title %> </label>
+      <label class="title-wrap text-purple-800 font-medium text-2xl"> Business: <%= business.business_name %> </label>
+      <label class="text-gray-700 font-medium"> Services booked: <%= if @enquiry.accommodation, do: "accommodation " %><%= if @enquiry.catering, do: "catering" %> <%= if @enquiry.events, do: " and events."%>.
+      <label class="text-gray-700 font-medium"> Number of guests: <%= if @enquiry.guests_number != nil, do: @enquiry.guests_number, else: "none" %>
+      <div class="c-inline pl-10">
+        <div>
+          <label> From: <%= if @enquiry.date_from != nil, do: @enquiry.date_from, else: "Not selected" %></label>
+        </div>
+        <div class="pl-5">
+          <label> To: <%= if @enquiry.date_to != nil, do: @enquiry.date_to, else: "Not selected" %></label>
+        </div>
+      </div>
+      </label>
+      <label class="text-gray-700 font-medium"> Your comment: <%= if @enquiry.comment != nil, do: @enquiry.comment, else: "Not added" %></label>
+      <div class="py-5 pl-64">
+        <button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Edit", to: Routes.user_path(LodgingWeb.Endpoint, :edit_enquiry, @user.id, @enquiry.id)) %></button>
+      </div>
+  </div>
+</label>

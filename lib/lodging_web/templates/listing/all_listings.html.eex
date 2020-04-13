@@ -1,12 +1,35 @@
-<h1> Hello <%= @business.name %>! View your listings here </h1>
-<button><%= link("Create a new listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @business.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></label>
+    <label class="text-gray-700 font-normal text-3xl"> View your listings here</label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.listing_path(LodgingWeb.Endpoint, :home, @business.id)) %></button>
+  </div>
+</div>
+
+<button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Create a new listing",to: Routes.listing_path(@conn, :add_new_listing, @business.id)) %></button>
+<br>
+<div class="c-move-images pt-10">
 <%= for listing <- @listings do %>
 <div>
-    <div>
-    <h3><%= listing.title %></h3>
-    <h2><em><%= Map.get(listing.config, "description") %></em></h2>
-    <button><%= link("Edit",to: Routes.listing_path(@conn, :edit_listing, @business.id, listing.id)) %></button>
-    <button><%= link("Delete",to: Routes.listing_path(@conn, :delete_listing, @business.id, listing.id)) %></button>
-    </div>
+    <%= for upload <- @uploads do %>
+      <%= if upload.listing_id == listing.id do %>
+        <%= if upload.thumbnail? do 
+          img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @business.id, listing.id, upload.id), class: "image-flex"
+        else
+          img_tag "/images/generic_thumbnail.jpg"
+        end %>
+      <% end %>
+    <% end %>
+  <label class="title-wrap text-purple-800 font-medium text-2xl"><%= listing.title %></label>
+  <label class="title-wrap italic text-purple-700 font-medium text-xl"><%= Map.get(listing.config, "description") %></label>
+  <label class="title-wrap text-purple-800 font-medium text-2xl pt-6"> Created: <%= listing.inserted_at %></label>
+  <div class="py-5 pl-56">
+    <button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("Edit",to: Routes.listing_path(@conn, :edit_listing, @business.id, listing.id)) %></button>
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Delete",to: Routes.listing_path(@conn, :delete_listing, @business.id, listing.id)) %></button>
+  </div>
 </div>
 <% end %>
+</div>

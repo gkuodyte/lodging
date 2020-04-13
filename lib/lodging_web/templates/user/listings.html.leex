@@ -1,39 +1,64 @@
-<h2> Search for a listing here! </h2>
+<div class="c-inline">
+  <div class="text-center lg:text-left">
+    <% user = @user.name %>
+    <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
+  </div>
+  <div class="c-button_business">
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Back", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></button>
+  </div>
+</div>
 <form phx-change="update_filter" onsubmit="return false;">
-  <div>
-    <h1> Filters </h1>
+  <div class="c-move-containers">
+    <label class="text-purple-700 font-medium text-4xl pt-6">Filters</label>
       <div>
-        <h4>Choose a city</h4>
+        <label class="text-purple-700 font-medium text-2xl pt-6">Choose a city</label>
           <select name="filter[city]">
-              <option value="<%= nil %>">Not specified</option>
-            <%= for city <- @cities do %>
-              <option value="<%= city %>" <%= if @filter.city == city, do: "selected" %> > <%= city %></option>
-            <% end %>
+              <option value="<%= nil %>" >Not specified</option>
+              <%= for city <- @cities do %>
+                <option value="<%= city %>" <%= if @filter.city == city, do: "selected" %> > <%= city %></option>
+              <% end %>
           </select>
       </div>
-      <h4> Choose services </h4>
       <div>
-        <input type="checkbox" name="filter[accommodation]" <%= if @filter.accommodation, do: "checked" %>> Accommodation
+        <label class="text-purple-700 font-medium text-2xl pt-6">Accommodation</label>
+        <input type="checkbox" name="filter[accommodation]" <%= if @filter.accommodation, do: "checked" %>> 
       </div>
       <div>
-        <input type="checkbox" name="filter[catering]" <%= if @filter.catering, do: "checked" %>> Catering
+        <label class="text-purple-700 font-medium text-2xl pt-6">Catering</label>
+        <input type="checkbox" name="filter[catering]" <%= if @filter.catering, do: "checked" %>> 
       </div>
       <div>
-        <input type="checkbox" name="filter[events]" <%= if @filter.events, do: "checked" %>> Events
+        <label class="text-purple-700 font-medium text-2xl pt-6">Events</label>
+        <input type="checkbox" name="filter[events]" <%= if @filter.events, do: "checked" %>> 
       </div>
       <div>
-        <input type="number" name="filter[guests_number]" <%= if @filter.guests_number != nil, do: @filter.guests_number %>> Guest number
+        <label class="text-purple-700 font-medium text-2xl pt-6">Guest number</label>
+        <input type="number" name="filter[guests_number]" placeholder="Enter number" <%= if @filter.guests_number != nil, do: @filter.guests_number %>>
       </div>
   </div>
   <br>
-<%= for listing <- @shown_listings do %>
-<div>
-    <div>
-    <h2> <%= listing.title %> </h2>
-    <h2><em><%= Map.get(listing.config, "description")%></em></h2>
-    <button><%= link("View", to: Routes.user_path(LodgingWeb.Endpoint, :open_listing, @user.id, listing.id)) %></button>
-    </div>
-</div>
-<br>
-<% end %>
+  <div class="c-move-images">
+    <%= for listing <- @shown_listings do %>
+      <div>
+        <%= for upload <- @uploads do %>
+          <%= if upload.listing_id == listing.id do %>
+            <%= for business <- @businesses do %>
+              <%= if listing.business_id == business.id do %>
+                <%= if upload.thumbnail? do 
+                  img_tag Routes.upload_thumbnail_path(@socket, :thumbnail, business.id, listing.id, upload.id), class: "image-flex"
+                else
+                  img_tag "/images/generic_thumbnail.jpg"
+                end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <label class="title-wrap text-purple-800 font-medium text-2xl pt-6"><%= listing.title %></label>
+        <label class="title-wrap italic text-purple-700 font-medium text-xl"><%= Map.get(listing.config, "description")%></label>
+        <div class="py-5 pl-64">
+          <button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none"><%= link("View", to: Routes.user_path(LodgingWeb.Endpoint, :open_listing, @user.id, listing.id)) %></button>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </form>

@@ -59,6 +59,12 @@ defmodule Lodging.Accounts.Listing do
       :config,
       :business_id
     ])
+    |> validate_required(
+      [
+        :title
+      ],
+      message: "did you forget this one? hehe"
+    )
     |> validate_postcode()
     |> validate_contact_number()
   end

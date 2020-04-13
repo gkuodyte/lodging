@@ -1,7 +1,7 @@
 defmodule LodgingWeb.UserController do
   use LodgingWeb, :controller
   import Phoenix.LiveView.Controller
-  alias Lodging.{Listings, Accounts, Enquiries, EmailSender}
+  alias Lodging.{Listings, Accounts, Enquiries, EmailSender, Documents}
   alias LodgingWeb.Endpoint
   alias LodgingWeb.Live.UserListings
   alias LodgingWeb.Live.EnquireListing
@@ -9,13 +9,16 @@ defmodule LodgingWeb.UserController do
   def home(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
     listings = Listings.all_listings()
-    render(conn, "home.html", user: user, listings: listings)
+    enquiries = Enquiries.all_enquiries()
+    render(conn, "home.html", user: user, listings: listings, enquiries: enquiries)
   end
 
   def view_listings(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
     listings = Listings.all_listings()
-    session = %{"user" => user, "listings" => listings}
+    uploads = Documents.list_uploads()
+    businesses = Accounts.get_businesses()
+    session = %{"user" => user, "listings" => listings, "uploads" => uploads, "businesses" => businesses}
     live_render(conn, UserListings, session: session)
   end
 
@@ -24,7 +27,8 @@ defmodule LodgingWeb.UserController do
     business_id = Map.get(listing, :business_id)
     business = Accounts.get_business!(business_id)
     user = Accounts.get_user!(user_id)
-    render(conn, "listing.html", listing: listing, business: business, user: user)
+    uploads = Documents.list_uploads()
+    render(conn, "listing.html", listing: listing, business: business, user: user, uploads: uploads)
   end
 
   def enquire_listing(conn, %{"user_id" => user_id, "listing_id" => listing_id}) do
@@ -38,24 +42,25 @@ defmodule LodgingWeb.UserController do
 
   def view_enquiries(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
+    uploads = Documents.list_uploads()
     enquiries = Enquiries.all_enquiries()
     user_enquiries =
       enquiries
       |> Enum.filter(fn listing -> Map.get(listing, :user_id) == user_id
       end)
-
-      render(conn, "enquiries.html", user: user, user_enquiries: user_enquiries)
+      render(conn, "enquiries.html", user: user, user_enquiries: user_enquiries, uploads: uploads)
   end
 
   def open_enquiry(conn, %{"user_id" => user_id, "enquiry_id" => enquiry_id}) do
     user = Accounts.get_user!(user_id)
     enquiry = Enquiries.get_enquiry!(enquiry_id)
-    render(conn, "enquiry.html", enquiry: enquiry, user: user)
+    uploads = Documents.list_uploads()
+    render(conn, "enquiry.html", enquiry: enquiry, user: user, uploads: uploads)
   end
 
   def edit_enquiry(conn, %{"user_id" => user_id, "enquiry_id" => enquiry_id}) do
     user = Accounts.get_user!(user_id)
-    enquiry = Enquiries.get_enquiry!(enquiry_id) |> IO.inspect(label: "enquiry")
+    enquiry = Enquiries.get_enquiry!(enquiry_id)
     listing = Listings.get_listing!(enquiry.listing_id)
     changeset = Enquiries.change_enquiry(enquiry, %{})
 
@@ -75,9 +80,9 @@ defmodule LodgingWeb.UserController do
         |> put_flash(:info, "Enquiry has been updated successfully")
         |> redirect(to: Routes.user_path(LodgingWeb.Endpoint, :open_enquiry, user_id, enquiry_id))
 
-        {:error, _message} ->
+        {:error, _reason} ->
           conn
-          |> put_flash(:error, "Couldnt updaet the enquiry")
+          |> put_flash(:error, "Couldnt update the enquiry")
           |> redirect(to: Routes.user_path(LodgingWeb.Endpoint, :edit_enquiry, user_id, enquiry_id))
 
     end

@@ -14,7 +14,7 @@ defmodule LodgingWeb.Live.UserListings do
     events: nil,
     city: nil
   }
-  def mount(_params, %{"user" => user, "listings" => listings}, socket) do
+  def mount(_params, %{"user" => user, "listings" => listings, "uploads" => uploads, "businesses" => businesses}, socket) do
     filter = @default_filter
 
     cities =
@@ -28,6 +28,8 @@ defmodule LodgingWeb.Live.UserListings do
     |> assign(:shown_listings, listings)
     |> assign(:cities, cities)
     |> assign(:user, user)
+    |> assign(:uploads, uploads)
+    |> assign(:businesses, businesses)
     |> OK.wrap()
   end
 

@@ -7,15 +7,16 @@ defmodule LodgingWeb.UploadController do
   alias Lodging.Documents
   alias Lodging.Documents.Upload
 
-  def new(conn, _params) do
-    render(conn, "new.html")
+  def new(conn, %{"business_id" => business_id, "listing_id" => listing_id}) do
+    render(conn, "new.html", business_id: business_id, listing_id: listing_id)
   end
 
-  def create(conn, %{"upload" => %Plug.Upload{}=upload}) do
-    case Documents.create_upload_from_plug_upload(upload) do
+  def create(conn, %{"upload" => %Plug.Upload{}=upload, "business_id" => business_id, "listing_id" => listing_id}) do
+    case Documents.create_upload_from_plug_upload(upload, listing_id) do
       {:ok, _upload}->
-        put_flash(conn, :info, "file uploaded correctly")
-        redirect(conn, to: Routes.upload_path(conn, :index))
+        conn
+        |> put_flash(:info, "File uploaded successfully")
+        |> redirect(to: Routes.listing_path(LodgingWeb.Endpoint, :view_all_listings, business_id))
 
       {:error, reason}->
         put_flash(conn, :error, "error upload file: #{inspect(reason)}")
@@ -28,14 +29,14 @@ defmodule LodgingWeb.UploadController do
     render(conn, "index.html", uploads: uploads)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"upload_id" => id}) do
     upload = Documents.get_upload!(id)
     local_path = Upload.local_path(upload.id, upload.filename)
     send_download conn, {:file, local_path}, filename: upload.filename
   end
 
-  def thumbnail(conn, %{"upload_id" => id}) do
-    thumb_path = Upload.thumbnail_path(id)
+  def thumbnail(conn, %{"upload_id" => upload_id}) do
+    thumb_path = Upload.thumbnail_path(upload_id)
 
     conn
     |> put_resp_content_type("image/jpeg")

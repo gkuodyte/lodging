@@ -1,28 +1,26 @@
+<div class="text-center lg:text-left">
+  <% user = @user.name %>
+  <label class="text-purple-800 font-medium text-5xl pt-6"><%= link("Hello " <> user <> "!", to: Routes.user_path(LodgingWeb.Endpoint, :home, @user.id)) %></label>
+  <label class="text-gray-700 font-normal text-3xl">Please enter your accommodation preferences</label>
+</div>
 <%= f = form_for @changeset, "#", [phx_change: :add_input] %>
-<div class="mx-auto flex">
-  <div class="order-2">
-    <h2>Hello <%= @user.name %> </h2>
-    <h3>Please enter your accommodation preferences</h3>
-  </div>
-</div>
-<%= if @listing.accommodation do %>
-        <h3>Property Type: <%= @listing.property_type %> </h3> 
-        <h3>Has <%= @listing.rooms_number %> rooms and can host <%= @listing.guests_number%> guests. Have <%= if @listing.rooms_type == "both", do: "both single and double", else: @listing.rooms %> rooms. </h3> 
-        <h3>The price for one person nightly stay is <%= @listing.night_price %> pounds.</h3>
-    <% end %>
-<div>
+  <%= if @listing.accommodation do %>
+    <label class="text-gray-700 font-medium">Property Type: <%= @listing.property_type %> </label> 
+    <label class="text-gray-700 font-medium">Has <%= @listing.rooms_number %> rooms and can host <%= @listing.guests_number%> guests. Have <%= if @listing.rooms_type == "both", do: "both single and double", else: @listing.rooms %> rooms. </label> 
+    <label class="text-gray-700 font-medium">The price for one person nightly stay is <%= @listing.night_price %> pounds.</label>
+  <% end %>
   <div>
-    <h4>Accommodation</h4>
-    <%= checkbox f, :accommodation %> Do you wish to book accommodation?
-  </div>
+    <div>
+      <label class="text-purple-700 font-medium text-2xl pt-3">Accommodation</label>
+      <%= checkbox f, :accommodation %> Do you wish to book accommodation?
+    </div>
 
-  <div>
-    <h4>Guests</h4>
-    <% max_guests = @listing.guests_number %>
-    <%= select f, :guests_number, 1..max_guests %> For how many people do you want to book?
+    <div>
+      <label class="text-purple-700 font-medium text-2xl pt-3">Guests</label>
+      <% max_guests = @listing.guests_number %>
+      <%= select f, :guests_number, 1..max_guests %> For how many people do you want to book?
+    </div>
   </div>
-
-</div>
 </form>
-<button phx-click="previous" > Back </button>
-<button phx-click="next" > Next </button>
+<button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600" phx-click="previous" > Back </button>
+<button class="bg-purple-600 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow-lg border-none" phx-click="next" > Next </button>

@@ -52,7 +52,6 @@ defmodule Lodging.Accounts do
   end
 
   def preload_listings(business) do
-    # Repo.all from b in Business, preload: [:listings]
     Repo.preload business, :listings
   end
 
@@ -64,16 +63,9 @@ defmodule Lodging.Accounts do
     end
   end
 
-  #   def get_user_by_email(email) do
-  #     Repo.get_by(User, email: email)
-  #     |> OK.required(:missing_user)
-  #   end
-
-  #   def update_user_info(%User{} = user, attrs) do
-  #     user
-  #     |> User.user_info_changeset(attrs)
-  #     |> Repo.update()
-  #   end
+  def get_businesses() do
+    Repo.all(Business)
+  end
 
   def validate_user(%User{} = user) do
     user
@@ -86,18 +78,4 @@ defmodule Lodging.Accounts do
     |> Business.verified_changeset(%{verified: true})
     |> Repo.update()
   end
-
-  #   def delete_user(%User{} = user) do
-  #     Repo.delete(user)
-  #   end
-
-  #   def change_info(%User{} = user, params \\ %{}) do
-  #     User.user_info_changeset(user, params)
-  #   end
-
-  #   def change_password(%User{} = user, attrs) do
-  #     user
-  #     |> User.password_changeset(attrs)
-  #     |> Repo.update()
-  #   end
 end
