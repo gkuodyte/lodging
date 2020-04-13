@@ -44,6 +44,8 @@ defmodule Lodging.Accounts.Auth do
     end
   end
 
+  defp authenticate_business(nil, _password), do: nil
+
   defp authenticate_business(business, password) do
     case Encryption.validate_business_password(business, password) do
       {:ok, authenticated_business} ->
@@ -53,8 +55,6 @@ defmodule Lodging.Accounts.Auth do
         nil
     end
   end
-
-  defp authenticate_business(nil, _password), do: nil
 
   def signed_in?(conn),
     do: !!Plug.Conn.get_session(conn, :current_account_id)
