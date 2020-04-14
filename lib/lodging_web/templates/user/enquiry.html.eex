@@ -11,14 +11,10 @@
   <div>
     <% listing = Lodging.Listings.get_listing!(@enquiry.listing_id) %>
     <% business = Lodging.Accounts.get_business!(@enquiry.business_id) %>
-    <%= for upload <- @uploads do %>
-      <%= if upload.listing_id == @enquiry.listing_id do %>
-        <%= if upload.thumbnail? do 
-          img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @enquiry.business_id, @enquiry.listing_id, upload.id)
-        else
-          img_tag "/images/generic_thumbnail.jpg"
-        end %>
-      <% end %>
+    <%= for image <- @images do %>
+      <%= if image.listing_id == listing.id do 
+        img_tag Routes.image_path(@conn, :index, @business.id, listing.id, image.id), class: "image-flex"
+      end %>
     <% end %>
       <label class="title-wrap text-purple-800 font-medium text-2xl pt-6"> Created: <%= @enquiry.inserted_at %></label>
       <label class="title-wrap text-purple-800 font-medium text-2xl"> Listing: <%= listing.title %> </label>

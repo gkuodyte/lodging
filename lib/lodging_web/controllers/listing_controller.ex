@@ -3,9 +3,13 @@ defmodule LodgingWeb.ListingController do
 
   import Plug.Conn
   import Phoenix.LiveView.Controller
+  import Ecto.Query, warn: false
   alias Lodging.{Accounts, Listings, Documents, Enquiries}
+  alias Lodging.Image
   alias LodgingWeb.Endpoint
   alias LodgingWeb.Live.ListingsLive
+  alias Lodging.Repo
+  alias Lodging.Images
   use OK.Pipe
 
   def home(conn, %{"business_id" => business_id}) do
@@ -22,8 +26,8 @@ defmodule LodgingWeb.ListingController do
   def view_all_listings(conn, %{"business_id" => business_id}) do
     business = Accounts.get_business!(business_id)
     listings = Map.get(business, :listings)
-    uploads = Documents.list_uploads()
-    render(conn, "all_listings.html", business: business, listings: listings, uploads: uploads)
+    images = Repo.all(Image)
+    render(conn, "all_listings.html", business: business, listings: listings, images: images)
   end
 
   def edit_listing(conn, %{"business_id" => business_id, "listing_id" => listing_id}) do
@@ -36,15 +40,19 @@ defmodule LodgingWeb.ListingController do
   def update_listing(conn, %{"business_id" => business_id, "listing_id" => listing_id, "listing" => new_params}) do
     listing = Listings.get_listing!(listing_id)
 
-    if Map.get(new_params, "upload") != nil do
-      upload = Map.get(new_params, "upload")
-      case Documents.create_upload_from_plug_upload(upload, listing_id) do
-        {:ok, _upload}->
-          put_flash(conn, :info, "File uploaded successfully")
+    if Map.get(new_params, "image") != nil do
+      image = Map.get(new_params, "image")
+        %{}
+        |> Map.put("image", image)
+        |> Map.put("listing_id", listing_id)
+        |> Images.create_image()
+        |> case do
+          {:ok, _upload}->
+            put_flash(conn, :info, "File uploaded successfully")
 
-        {:error, reason}->
-          put_flash(conn, :error, "Error uploading file: #{inspect(reason)}")
-      end
+          {:error, reason}->
+            put_flash(conn, :error, "Error uploading file: #{inspect(reason)}")
+        end
     end
 
     config =

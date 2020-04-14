@@ -68,7 +68,6 @@ defmodule Lodging.Accounts.User do
     |> validate_password()
     |> encrypt_password()
     |> validate_required(:encrypted_password)
-    |> IO.inspect()
   end
 
   def verified_changeset(user, attrs) do

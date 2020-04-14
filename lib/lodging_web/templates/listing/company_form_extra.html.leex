@@ -37,14 +37,14 @@
   <% end %>
 
   <%= if Map.get(@inputs, "events") == "true" do %>
-  <div>
-  <label class="text-purple-700 font-medium text-2xl pt-3">Events type</label>
+  <div class="w-3/5 lg:w-2/5 lg:mb-6">
+    <label class="text-purple-700 font-medium text-2xl pt-3">Events type</label>
     <%= text_input f, :events_type %> Please provide a description of what type of events you can host
   </div>
   <% end %>
 
   <div class="w-3/5 lg:w-2/5 lg:mb-6">
-  <label class="text-purple-700 font-medium text-2xl pt-3">Contact number (Optional) </label>
+    <label class="text-purple-700 font-medium text-2xl pt-3">Contact number (Optional) </label>
     <%= text_input f, :contact_number %> Please enter your contact number for getting in touch about the listing
   </div>
 

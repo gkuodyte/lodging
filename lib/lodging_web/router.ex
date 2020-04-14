@@ -98,8 +98,8 @@ defmodule LodgingWeb.Router do
   scope "/business", LodgingWeb do
     pipe_through :browser
 
-    resources "/:business_id/listing/:listing_id/edit/uploads", UploadController, only: [:index, :new, :create, :show] do
-      get "/thumbnail", UploadController, :thumbnail, as: "thumbnail"
-    end
+    get "/:business_id/listing/:listing_id/edit/uploads/image", ImageController, :new
+    post "/:business_id/listing/:listing_id/edit/uploads/image", ImageController, :create
+    get "/:business_id/listing/:listing_id/edit/uploads/image/:id", ImageController, :index
   end
 end

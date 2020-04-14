@@ -14,15 +14,11 @@
 <div class="c-move-images pt-10">
 <%= for listing <- @listings do %>
 <div>
-    <%= for upload <- @uploads do %>
-      <%= if upload.listing_id == listing.id do %>
-        <%= if upload.thumbnail? do 
-          img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @business.id, listing.id, upload.id), class: "image-flex"
-        else
-          img_tag "/images/generic_thumbnail.jpg"
-        end %>
-      <% end %>
-    <% end %>
+  <%= for image <- @images do %>
+    <%= if image.listing_id == listing.id do 
+      img_tag Routes.image_path(@conn, :index, @business.id, listing.id, image.id), class: "image-flex"
+    end %>
+  <% end %>
   <label class="title-wrap text-purple-800 font-medium text-2xl"><%= listing.title %></label>
   <label class="title-wrap italic text-purple-700 font-medium text-xl"><%= Map.get(listing.config, "description") %></label>
   <label class="title-wrap text-purple-800 font-medium text-2xl pt-6"> Created: <%= listing.inserted_at %></label>

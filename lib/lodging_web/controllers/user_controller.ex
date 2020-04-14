@@ -1,10 +1,13 @@
 defmodule LodgingWeb.UserController do
   use LodgingWeb, :controller
   import Phoenix.LiveView.Controller
+  import Ecto.Query, warn: false
   alias Lodging.{Listings, Accounts, Enquiries, EmailSender, Documents}
   alias LodgingWeb.Endpoint
   alias LodgingWeb.Live.UserListings
   alias LodgingWeb.Live.EnquireListing
+  alias Lodging.Repo
+  alias Lodging.Image
 
   def home(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
@@ -16,9 +19,9 @@ defmodule LodgingWeb.UserController do
   def view_listings(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
     listings = Listings.all_listings()
-    uploads = Documents.list_uploads()
+    images = Repo.all(Image)
     businesses = Accounts.get_businesses()
-    session = %{"user" => user, "listings" => listings, "uploads" => uploads, "businesses" => businesses}
+    session = %{"user" => user, "listings" => listings, "images" => images, "businesses" => businesses}
     live_render(conn, UserListings, session: session)
   end
 
@@ -27,8 +30,8 @@ defmodule LodgingWeb.UserController do
     business_id = Map.get(listing, :business_id)
     business = Accounts.get_business!(business_id)
     user = Accounts.get_user!(user_id)
-    uploads = Documents.list_uploads()
-    render(conn, "listing.html", listing: listing, business: business, user: user, uploads: uploads)
+    images = Repo.all(Image)
+    render(conn, "listing.html", listing: listing, business: business, user: user, images: images)
   end
 
   def enquire_listing(conn, %{"user_id" => user_id, "listing_id" => listing_id}) do
@@ -42,20 +45,20 @@ defmodule LodgingWeb.UserController do
 
   def view_enquiries(conn, %{"user_id" => user_id}) do
     user = Accounts.get_user!(user_id)
-    uploads = Documents.list_uploads()
+    images = Repo.all(Image)
     enquiries = Enquiries.all_enquiries()
     user_enquiries =
       enquiries
       |> Enum.filter(fn listing -> Map.get(listing, :user_id) == user_id
       end)
-      render(conn, "enquiries.html", user: user, user_enquiries: user_enquiries, uploads: uploads)
+      render(conn, "enquiries.html", user: user, user_enquiries: user_enquiries, images: images)
   end
 
   def open_enquiry(conn, %{"user_id" => user_id, "enquiry_id" => enquiry_id}) do
     user = Accounts.get_user!(user_id)
     enquiry = Enquiries.get_enquiry!(enquiry_id)
-    uploads = Documents.list_uploads()
-    render(conn, "enquiry.html", enquiry: enquiry, user: user, uploads: uploads)
+    images = Repo.all(Image)
+    render(conn, "enquiry.html", enquiry: enquiry, user: user, images: images)
   end
 
   def edit_enquiry(conn, %{"user_id" => user_id, "enquiry_id" => enquiry_id}) do

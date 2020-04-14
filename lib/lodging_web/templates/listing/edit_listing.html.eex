@@ -22,7 +22,7 @@
       <%= text_input f, :contact_number, value: @listing.contact_number %> Please enter your contact number for getting in touch about the listing
 
       <label class="text-purple-700 font-medium text-2xl pt-3">Images </label>
-      <%= file_input f, :upload, class: "form-control" %>
+      <%= file_input f, :image, class: "form-control" %>
     </div>
 
     <div class="w-3/5 lg:w-2/5 lg:mb-6 pt-5"> 

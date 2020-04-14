@@ -93,7 +93,7 @@ defmodule LodgingWeb.Live.ListingsLive do
         {:noreply,
         socket
         |> put_flash(:info, "Listing has been created successfully")
-        |> redirect(to: Routes.upload_path(LodgingWeb.Endpoint, :new, business.id, listing.id))
+        |> redirect(to: Routes.image_path(LodgingWeb.Endpoint, :new, business.id, listing.id))
       }
 
       {:error, _} ->

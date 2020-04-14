@@ -9,15 +9,11 @@
 </div>
 <div class="c-move-containers">
   <div>
-      <%= for upload <- @uploads do %>
-        <%= if upload.listing_id == @listing.id do %>
-          <%= if upload.thumbnail? do 
-            img_tag Routes.upload_thumbnail_path(@conn, :thumbnail, @business.id, @listing.id, upload.id)
-          else
-            img_tag "/images/generic_thumbnail.jpg"
-          end %>
-        <% end %>
-      <% end %>
+    <%= for image <- @images do %>
+      <%= if image.listing_id == @listing.id do 
+        img_tag Routes.image_path(@conn, :index, @business.id, @listing.id, image.id), class: "image-flex"
+      end %>
+    <% end %>
   </div>
   <div>
     <br>
