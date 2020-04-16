@@ -42,12 +42,14 @@ defmodule LodgingWeb.Live.EnquireListing do
   end
 
   def handle_event("next", _values, %{assigns: %{current_index: current_index, listing: listing}} = socket) do
-    next_index =
-      if listing.accommodation do
-        current_index + 1
+    current_index =
+      if !listing.accommodation && current_index == 0 do
+        1
       else
-        current_index + 3
+        current_index
       end
+
+    next_index = current_index + 1
 
     socket
     |> assign(:current_index, next_index)
@@ -55,12 +57,7 @@ defmodule LodgingWeb.Live.EnquireListing do
   end
 
   def handle_event("previous", _values, %{assigns: %{current_index: current_index, listing: listing}} = socket) do
-    previous_index =
-      if listing.accommodation == false do
-        current_index - 3
-      else
-        current_index - 1
-      end
+    previous_index = current_index - 1
 
       socket
       |> assign(:current_index, previous_index)

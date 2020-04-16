@@ -8,19 +8,19 @@
   <div class="w-3/5 lg:w-4/5 lg:mb-6 lg:flex">
     <div class="mb-4 lg:mx-2 text-center lg:text-left">
       <h4 class="text-purple-700 font-medium text-3xl">Username</h4>
-      <%= text_input f, :username, autofocus: true, required: true, class: "mb-4" %>
+      <%= text_input f, :username, autofocus: true, required: true, class: "mb-4", placeholder: "Between 8 and 19 characters." %>
       <%= error_tag f, :username %>
     </div>
 
     <div class="mb-4 lg:mx-2 text-center lg:text-left">
       <h4 class="text-purple-700 font-medium text-3xl">Password</h4>
-      <%= password_input f, :password, required: true, class: "mb-4" %>
+      <%= password_input f, :password, required: true, class: "mb-4", placeholder: "Upper-case, lower-case and number." %>
       <%= error_tag f, :password %>
     </div>
 
     <div class="mb-4 max-w-1/4 lg:mx-2 text-center lg:text-left">
       <h4 class="text-purple-700 font-medium text-3xl">Confirm password</h4>
-      <%= password_input f, :password_confirmation, required: true, class: "mb-4" %>
+      <%= password_input f, :password_confirmation, required: true, class: "mb-4", placeholder: "Minimum 8 characters." %>
       <%= error_tag f, :password_confirmation %> 
     </div>
   </div>

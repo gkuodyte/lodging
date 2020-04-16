@@ -3,7 +3,7 @@
     <label class="text-purple-800 font-medium text-5xl pt-6">Hello <%= @user.name %>!</label>
   </div>
   <div class="c-button_business pb-48">
-    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300"><%= link("Logout", to: Routes.session_path(LodgingWeb.Endpoint, :delete)) %></button>
+    <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-300 hover:text-purple-700"><%= link("Logout", to: Routes.session_path(LodgingWeb.Endpoint, :delete)) %></button>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
       <label class="italic text-purple-700 font-medium text-3xl"> Book unique places to stay and </label>
       <label class="italic text-purple-700 font-medium text-3xl"> different activities!</label>
       <div class="pl-32 pt-5">
-        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("Search",to: Routes.user_path(@conn, :view_listings, @user.id)) %></button>
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600 hover:text-purple-700"><%= link("Search",to: Routes.user_path(@conn, :view_listings, @user.id)) %></button>
       </div>
     <% end %>
   </div>
@@ -31,7 +31,7 @@
       <label class="italic text-purple-700 font-medium text-3xl"> Your completed and updated </label>
       <label class="italic text-purple-700 font-medium text-3xl"> enquiries!</label>
       <div class="pl-32 pt-5">
-        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600"><%= link("View",to: Routes.user_path(@conn, :view_enquiries, @user.id)) %></button>
+        <button class="bg-white hover:bg-white text-purple-600 font-medium py-2 px-4 rounded shadow-lg border-purple-600 hover:text-purple-700"><%= link("View",to: Routes.user_path(@conn, :view_enquiries, @user.id)) %></button>
       </div>
     <% end %>
   </div>

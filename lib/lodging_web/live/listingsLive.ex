@@ -60,12 +60,15 @@ defmodule LodgingWeb.Live.ListingsLive do
   end
 
   def handle_event("next", _values, %{assigns: %{current_index: current_index, inputs: inputs}} = socket) do
-    next_index =
-      if Map.get(inputs, "accommodation") != "false" do
-        current_index + 1
+
+    current_index =
+      if Map.get(inputs, "accommodation") == "false" && current_index == 0 do
+        1
       else
-        current_index + 3
+        current_index
       end
+
+    next_index = current_index + 1
 
     socket
     |> assign(:current_index, next_index)
@@ -73,12 +76,7 @@ defmodule LodgingWeb.Live.ListingsLive do
   end
 
   def handle_event("previous", _values, %{assigns: %{current_index: current_index, inputs: inputs}} = socket) do
-    previous_index =
-      if Map.get(inputs, "accommodation") == "false" do
-        current_index - 3
-      else
-        current_index - 1
-      end
+    previous_index = current_index - 1
 
       socket
       |> assign(:current_index, previous_index)
