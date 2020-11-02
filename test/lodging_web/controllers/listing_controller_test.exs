@@ -117,12 +117,11 @@ defmodule LodgingWeb.ListingControllerTest do
     setup [:business_account, :login_business]
 
     test "home page allows to view", %{conn: conn, business: business} do
-      Listings.create_listing(@valid_listing_attrs)
       conn =
         conn
         |> get(Routes.listing_path(conn, :home, business.id))
 
-      assert html_response(conn, 200) =~ "View your existing listings"
+      assert html_response(conn, 200) =~ "Create your first listing"
     end
 
     test "in listings page, loads all listings and is a create button", %{conn: conn, business: business} do
@@ -142,16 +141,6 @@ defmodule LodgingWeb.ListingControllerTest do
         |> get(Routes.listing_path(conn, :edit_listing, business.id, listing.id))
 
       assert html_response(conn, 200) =~ "Please edit your listing here"
-    end
-
-    test "update existing listing", %{conn: conn, business: business} do
-      {:ok, listing} = Listings.create_listing(@valid_listing_attrs)
-      conn =
-        conn
-        |> post(Routes.listing_path(conn, :update_listing, business.id, listing.id))
-
-      assert html_response(conn, 302)
-      assert Routes.listing_path(conn, :view_all_listings, business.id) == conn.request_path
     end
   end
 end

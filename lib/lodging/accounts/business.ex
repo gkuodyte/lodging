@@ -8,7 +8,6 @@ defmodule Lodging.Accounts.Business do
   import Ecto.Changeset
   alias Lodging.Accounts.Encryption
   alias Lodging.Accounts.Listing
-  @missing_field "Please fill in this field."
 
   @primary_key {:id, :binary_id, auto_generate: false}
   schema "businesses" do

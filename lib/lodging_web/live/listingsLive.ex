@@ -1,4 +1,5 @@
 defmodule LodgingWeb.Live.ListingsLive do
+
   use Phoenix.LiveView
   alias LodgingWeb.Router.Helpers, as: Routes
   alias Lodging.Accounts.Listing
@@ -75,7 +76,7 @@ defmodule LodgingWeb.Live.ListingsLive do
     |> noreply()
   end
 
-  def handle_event("previous", _values, %{assigns: %{current_index: current_index, inputs: inputs}} = socket) do
+  def handle_event("previous", _values, %{assigns: %{current_index: current_index, inputs: _inputs}} = socket) do
     previous_index = current_index - 1
 
       socket

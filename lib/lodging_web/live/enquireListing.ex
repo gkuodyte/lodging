@@ -56,7 +56,7 @@ defmodule LodgingWeb.Live.EnquireListing do
     |> noreply()
   end
 
-  def handle_event("previous", _values, %{assigns: %{current_index: current_index, listing: listing}} = socket) do
+  def handle_event("previous", _values, %{assigns: %{current_index: current_index, listing: _listing}} = socket) do
     previous_index = current_index - 1
 
       socket

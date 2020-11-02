@@ -64,6 +64,10 @@ defmodule LodgingWeb.BusinessController do
     end
   end
 
+  def verify_email(conn, _) do
+    PlugHelper.throw_404(conn)
+  end
+
   def verified_business_redirect(conn, business) do
     if business.verified do
       conn
@@ -78,9 +82,5 @@ defmodule LodgingWeb.BusinessController do
       |> redirect(to: Routes.session_path(conn, :new))
       |> halt()
     end
-  end
-
-  def verify_email(conn, _) do
-    PlugHelper.throw_404(conn)
   end
 end

@@ -47,6 +47,11 @@ defmodule LodgingWeb.Plugs.PlugHelper do
     |> halt()
   end
 
+  defp redir(_, conn) do
+    conn
+    |> throw_404()
+  end
+
   def get_current_user(conn) do
     account_id = Plug.Conn.get_session(conn, :current_account_id)
     account_type = Plug.Conn.get_session(conn, :account_type)
@@ -56,11 +61,6 @@ defmodule LodgingWeb.Plugs.PlugHelper do
     else
       Accounts.get_business!(account_id)
     end
-  end
-
-  defp redir(_, conn) do
-    conn
-    |> throw_404()
   end
 
   def throw_404(conn) do

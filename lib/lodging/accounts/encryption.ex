@@ -1,6 +1,6 @@
 defmodule Lodging.Accounts.Encryption do
   @moduledoc """
-  User password ancryption module.
+  User password encryption module.
   """
   alias Lodging.Accounts.{User, Business}
 

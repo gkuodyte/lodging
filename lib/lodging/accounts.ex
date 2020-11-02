@@ -6,7 +6,7 @@ defmodule Lodging.Accounts do
   import Ecto.Query, warn: false
   use OK.Pipe
   alias Lodging.Repo
-  alias Lodging.Accounts.{User, Business, Listing}
+  alias Lodging.Accounts.{User, Business}
 
   def change_user(%User{} = user \\ %User{}, %{} = changes) do
     user

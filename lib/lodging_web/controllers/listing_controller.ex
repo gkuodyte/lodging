@@ -4,7 +4,7 @@ defmodule LodgingWeb.ListingController do
   import Plug.Conn
   import Phoenix.LiveView.Controller
   import Ecto.Query, warn: false
-  alias Lodging.{Accounts, Listings, Documents, Enquiries}
+  alias Lodging.{Accounts, Listings, Enquiries}
   alias Lodging.Image
   alias LodgingWeb.Endpoint
   alias LodgingWeb.Live.ListingsLive

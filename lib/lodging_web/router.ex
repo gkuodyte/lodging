@@ -1,7 +1,7 @@
 defmodule LodgingWeb.Router do
   use LodgingWeb, :router
 
-  alias LodgingWeb.Plugs.{Auth, Guest, User, Verify, Business}
+  alias LodgingWeb.Plugs.{Auth, Guest, User, Business}
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -42,10 +42,6 @@ defmodule LodgingWeb.Router do
     post("/registeruser", AccountController, :create)
     get("/registerbusiness", BusinessController, :new)
     post("/registerbusiness", BusinessController, :create)
-    #   get("/forgotpassword", AccountController, :forgotten_password)
-    #   post("/forgotpassword", AccountController, :send_email_for_new_password)
-    #   get("/changepassword", AccountController, :change_password)
-    #   put("/changepassword", AccountController, :set_new_password)
   end
 
   scope "/", LodgingWeb do
@@ -54,7 +50,6 @@ defmodule LodgingWeb.Router do
     get("/:business_id/verifybusiness", BusinessController, :verify_email)
   end
 
-  # # Scope for verifying a new account
   scope "/", LodgingWeb do
     pipe_through :browser
 
@@ -81,7 +76,7 @@ defmodule LodgingWeb.Router do
     put("/:user_id/enquiries/:enquiry_id/enquiry/edit", UserController, :update_enquiry)
   end
 
-  # Listing scope
+  # Business scope
   scope "/business", LodgingWeb do
     pipe_through [:browser, :business]
 

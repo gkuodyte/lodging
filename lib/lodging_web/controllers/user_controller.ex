@@ -2,7 +2,7 @@ defmodule LodgingWeb.UserController do
   use LodgingWeb, :controller
   import Phoenix.LiveView.Controller
   import Ecto.Query, warn: false
-  alias Lodging.{Listings, Accounts, Enquiries, EmailSender, Documents}
+  alias Lodging.{Listings, Accounts, Enquiries, EmailSender}
   alias LodgingWeb.Endpoint
   alias LodgingWeb.Live.UserListings
   alias LodgingWeb.Live.EnquireListing
@@ -87,7 +87,6 @@ defmodule LodgingWeb.UserController do
           conn
           |> put_flash(:error, "Couldnt update the enquiry")
           |> redirect(to: Routes.user_path(LodgingWeb.Endpoint, :edit_enquiry, user_id, enquiry_id))
-
     end
   end
 end

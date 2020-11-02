@@ -6,9 +6,7 @@ defmodule Lodging.Accounts.User do
   use Ecto.Schema
 
   import Ecto.Changeset
-
   alias Lodging.Accounts.Encryption
-  @missing_field "Please fill in this field."
 
   @primary_key {:id, :binary_id, auto_generate: false}
   schema "users" do
@@ -75,7 +73,6 @@ defmodule Lodging.Accounts.User do
     |> cast(attrs, [:verified])
     |> validate_required([:verified])
   end
-
 
   defp validate_password(%{changes: %{password: password}} = changeset) do
     # Check length and content and return only 1 error even if both fails.

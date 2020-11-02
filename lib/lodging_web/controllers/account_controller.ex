@@ -77,6 +77,13 @@ defmodule LodgingWeb.AccountController do
     end
   end
 
+  @doc """
+  Path to verify user when there is no token passed in
+  """
+  def verify_email(conn, _) do
+    PlugHelper.throw_404(conn)
+  end
+
   def verified_user_redirect(conn, user) do
     if user.verified do
       conn
@@ -91,12 +98,5 @@ defmodule LodgingWeb.AccountController do
       |> redirect(to: Routes.session_path(conn, :new))
       |> halt()
     end
-  end
-
-  @doc """
-  Path to verify user when there is no token passed in
-  """
-  def verify_email(conn, _) do
-    PlugHelper.throw_404(conn)
   end
 end

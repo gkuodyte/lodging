@@ -14,7 +14,6 @@ defmodule Lodging.Documents.Upload do
     timestamps()
   end
 
-  @doc false
   def changeset(upload, attrs) do
     upload
     |> cast(attrs, [:filename, :size, :content_type, :hash, :thumbnail?, :listing_id])
