@@ -18,6 +18,7 @@ config :lodging, LodgingWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :lodging, local_url: "https://evening-fjord-23383.herokuapp.com"
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

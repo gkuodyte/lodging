@@ -4,7 +4,7 @@ defmodule Lodging.Email do
   """
 
   import Bamboo.Email
-  @from {"Lodging platform", "noreply@gabijakuodyte.com"}
+  @from {"Lodging platform", "kuodyte.g@gmail.com"}
 
   def verification_email(name, email, verification_url) do
     new_email(

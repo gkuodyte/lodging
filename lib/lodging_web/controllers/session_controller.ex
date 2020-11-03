@@ -56,25 +56,25 @@ defmodule LodgingWeb.SessionController do
     end
   end
 
-  defp verified_account_redirect(conn, account, new_account_path, _new_redirect_path) do
-    # if account.verified do
+  defp verified_account_redirect(conn, account, new_account_path, new_redirect_path) do
+    if account.verified do
       conn
       |> put_session(:current_account_id, account.id)
       |> put_session(:account_type, account.account_type)
       |> configure_session(renew: true)
       |> redirect(to: new_account_path)
       |> halt()
-    # else
-    #   conn
-    #   |> put_flash(:error, [
-    #     "You arent verified!",
-    #     link("Click here to send a new email",
-    #       to: new_redirect_path
-    #     ),
-    #     "."
-    #   ])
-    #   |> render("new.html")
-    # end
+    else
+      conn
+      |> put_flash(:error, [
+        "You arent verified!",
+        link("Click here to send a new email",
+          to: new_redirect_path
+        ),
+        "."
+      ])
+      |> render("new.html")
+    end
   end
 
   def delete(conn, _params) do
